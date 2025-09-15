@@ -1,278 +1,167 @@
 {
   "basics": {
-    "name": "Miguel Ángel Durán",
-    "label": "Full Stack Developer con más de 15 años de experiencia & Creador de Contenido de Programación",
-    "image": "/me.webp",
-    "email": "miduga@gmail.com",
-    "url": "https://midu.dev",
-    "summary": "+15 años de experiencia como Desarrollador Web. Actualmente soy Creador de Contenido y Divulgador sobre Programación. Vivo en Barcelona, España. He trabajado en diferentes entornos: desde acelerar el desarrollo de start-ups hasta liderando equipos de empresas multinacionales.",
+    "name": "Antonio Gómez Camarena",
+    "label": "Backend Developer",
+    "email": "",
+    "url": "",
+    "summary": "Desarrollador Backend en formación con enfoque en Python y FastAPI. Titulado en Desarrollo de Aplicaciones Multiplataforma y con experiencia previa en soporte TI. He desarrollado proyectos personales y académicos aplicando principios como Clean Architecture y SOLID. También cuento con experiencia en Java adquirida durante dos años de formación y me interesa seguir creciendo profesionalmente en equipos con buenas prácticas de desarrollo.",
     "location": {
       "address": "",
-      "postalCode": "08820",
-      "city": "el Prat de Llobregat",
+      "postalCode": "",
+      "city": "",
       "countryCode": "ES",
       "region": "España"
     },
     "profiles": [
       {
-        "network": "LinkedIn",
-        "username": "Antonio Gómez Camarena",
-        "url": "https://linkedin.com/in/antonio-gomez-camarena"
-      },
-      {
         "network": "GitHub",
         "username": "agomcam813",
         "url": "https://github.com/agomcam813"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "Antonio Gómez Camarena",
+        "url": "https://linkedin.com/in/antonio-gomez-camarena"
       }
     ]
   },
   "work": [
     {
-      "name": "midudev",
-      "position": "Divulgador sobre Programación Web",
-      "url": "https://twitch.tv/midudev",
-      "startDate": "2021-01-01",
-      "endDate": null,
-      "summary": "Streamer de programación más visto en Español en Twitch. +1 millón de seguidores entre todas mis redes sociales. Reconocido por Google, Microsoft y GitHub por mi impacto en la comunidad de desarrolladores.",
+      "name": "Mobivery",
+      "position": "Prácticas de Desarrollo Backend Python",
+      "startDate": "2025-04-01",
+      "endDate": "2025-06-30",
+      "summary": "Prácticas de desarrollo backend con Python y FastAPI, aplicando Tortoise ORM para la gestión de bases de datos y creación de APIs REST.",
       "highlights": [
-        "Started the company"
+        "Desarrollo de APIs REST con Python y FastAPI",
+        "Gestión de bases de datos con Tortoise ORM",
+        "Aplicación de principios de Clean Architecture y SOLID"
       ]
     },
     {
-      "name": "Adevinta",
-      "position": "Lead Frontend Architect",
-      "url": "https://twitch.tv/midudev",
-      "startDate": "2016-06-01",
-      "endDate": "2022-09-01",
-      "summary": "Lideré una convergencia técnica entre diferentes productos y migramos una arquitectura monolítica a otra más flexible y optimizada. Fomenté buenas prácticas y mejoras en la cultura de rendimiento, además de la entrega rápida de valor a los usuarios.",
+      "name": "Álvaro Moreno",
+      "position": "Prácticas en Soporte TI",
+      "startDate": "2023-03-01",
+      "endDate": "2023-06-30",
+      "summary": "Soporte técnico a usuarios, instalación y configuración de software empresarial y mantenimiento de equipos informáticos.",
       "highlights": [
-        "Started the company"
-      ]
-    },
-    {
-      "name": "Hubii",
-      "position": "Senior FrontEnd Developer",
-      "startDate": "2011-03-01",
-      "endDate": "2016-05-01",
-      "summary": "Desarrollé una plataforma de noticias geolocalizadas y una API para consumir la información. Escalé los servicios para soportar la carga de más de cientos de miles de peticiones al día. Recorté los tiempos de entrega y despliegues a producción a la mitad. Colaboré con Mozilla y Telefónica para desarrollar la primera app para televisores con FirefoxOS.",
-      "highlights": [
-        "Started the company"
-      ]
-    }
-  ],
-  "volunteer": [
-    {
-      "organization": "Organization",
-      "position": "Volunteer",
-      "url": "https://organization.com/",
-      "startDate": "2012-01-01",
-      "endDate": "2013-01-01",
-      "summary": "Description…",
-      "highlights": [
-        "Awarded 'Volunteer of the Month'"
+        "Instalación y configuración de software",
+        "Diagnóstico y resolución de problemas técnicos",
+        "Mantenimiento de equipos informáticos"
       ]
     }
   ],
   "education": [
     {
-      "institution": "Universitat Oberta de Catalunya",
-      "url": "https://www.uoc.edu/portal/es/index.html",
-      "area": "Ingeniero de Software",
-      "studyType": "Bachelor",
-      "startDate": "2003-01-01",
-      "endDate": "2009-01-01",
-      "score": "4.0",
-      "courses": [
-        "DB1101 - Basic SQL"
-      ]
-    }
-  ],
-  "publications": [
+      "institution": "I.E.S. Profesor Juan Antonio Carrillo Salcedo",
+      "area": "Técnico Superior en Desarrollo de Aplicaciones Multiplataforma",
+      "studyType": "FP Grado Superior",
+      "startDate": "2023-01-01",
+      "endDate": "2025-01-01"
+    },
     {
-      "name": "Publication",
-      "publisher": "Company",
-      "releaseDate": "2014-10-01",
-      "url": "https://publication.com",
-      "summary": "Description…"
+      "institution": "I.E.S. Profesor Juan Antonio Carrillo Salcedo",
+      "area": "Técnico en Sistemas Microinformáticos y Redes",
+      "studyType": "FP Grado Medio",
+      "startDate": "2021-01-01",
+      "endDate": "2023-01-01"
     }
   ],
   "skills": [
     {
-      "name": "HTML",
-      "level": "Master",
+      "name": "Lenguajes de Programación",
       "keywords": [
-        "Desarrollo Web",
-        "Frontend"
-      ]
-    },
-    {
-      "name": "CSS",
-      "level": "Master",
-      "keywords": [
-        "Desarrollo Web",
-        "Frontend",
-        "Diseño Responsive"
-      ]
-    },
-    {
-      "name": "JavaScript",
-      "level": "Master",
-      "keywords": [
-        "Desarrollo Web",
-        "Frontend",
-        "Backend",
-        "Fullstack"
-      ]
-    },
-    {
-      "name": "Tailwind",
-      "level": "Avanzado",
-      "keywords": [
-        "Desarrollo Web",
-        "Frontend",
-        "CSS Framework",
-        "Diseño Responsive"
-      ]
-    },
-    {
-      "name": "TypeScript",
-      "level": "Avanzado",
-      "keywords": [
-        "Desarrollo Web",
-        "Frontend",
-        "Backend",
-        "JavaScript Superset"
-      ]
-    },
-    {
-      "name": "Node",
-      "level": "Avanzado",
-      "keywords": [
-        "Desarrollo Web",
-        "Backend",
+        "Python (FastAPI, Tortoise ORM, APIs REST)",
+        "Java (Spring Framework, Hibernate, Android Studio)",
         "JavaScript",
-        "Servidor"
+        "TypeScript",
+        "HTML5",
+        "CSS3"
       ]
     },
     {
-      "name": "MySQL",
-      "level": "Avanzado",
+      "name": "Frameworks y Tecnologías",
       "keywords": [
-        "Bases de Datos",
-        "SQL",
-        "Almacenamiento de Datos",
-        "Backend"
+        "FastAPI (Python)",
+        "Spring Framework (Java)",
+        "Angular",
+        "Bootstrap",
+        "Android Studio"
       ]
     },
     {
-      "name": "Git",
-      "level": "Avanzado",
+      "name": "Bases de Datos",
       "keywords": [
-        "Control de Versiones",
-        "Colaboración",
-        "Código Fuente"
+        "MySQL",
+        "PostgreSQL",
+        "Tortoise ORM (Python)",
+        "Hibernate (Java)"
       ]
     },
     {
-      "name": "GitHub",
-      "level": "Avanzado",
+      "name": "Herramientas de Desarrollo",
       "keywords": [
-        "Control de Versiones",
-        "Colaboración",
-        "Código Fuente",
-        "Git"
+        "Git",
+        "GitHub",
+        "Bitbucket",
+        "Docker",
+        "Firebase",
+        "Supabase",
+        "Render",
+        "PyCharm",
+        "IntelliJ IDEA",
+        "Visual Studio Code",
+        "WebStorm"
       ]
     },
     {
-      "name": "Next.js",
-      "level": "Avanzado",
+      "name": "Metodologías y Principios",
       "keywords": [
-        "Desarrollo Web",
-        "Frontend",
-        "React Framework",
-        "SSR",
-        "Static Generation"
-      ]
-    },
-    {
-      "name": "React",
-      "level": "Avanzado",
-      "keywords": [
-        "Desarrollo Web",
-        "Frontend",
-        "JavaScript Library",
-        "UI"
+        "Clean Architecture",
+        "SOLID",
+        "Metodologías Ágiles",
+        "Buenas Prácticas de Desarrollo"
       ]
     }
   ],
   "languages": [
     {
-      "language": "Spanish",
-      "fluency": "Native speaker"
+      "language": "Español",
+      "fluency": "Nativo"
     }
   ],
   "projects": [
     {
-      "name": "mars.codes",
+      "name": "KanbanAntonioBackend",
       "isActive": true,
-      "description": "Historia interactiva con retos de programación para viajar a Marte",
+      "description": "API REST para gestión de tableros Kanban, desarrollada con Python y FastAPI aplicando principios de arquitectura limpia.",
       "highlights": [
-        "Elige tu propia aventura",
-        "En desarrollo"
+        "Implementación de arquitectura limpia (Clean Architecture)",
+        "Uso de principios SOLID",
+        "Gestión de tareas y columnas en tableros Kanban",
+        "Persistencia de datos con Tortoise ORM y PostgreSQL",
+        "Autenticación y permisos con supabase"
       ],
-      "url": "https://mars.codes"
+      "url": "https://github.com/agomcam813/kanbanAntonioBackend",
+      "github": "https://github.com/agomcam813/kanbanAntonioBackend"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Backend Development",
+      "keywords": [
+        "APIs",
+        "Microservicios",
+        "Arquitectura Limpia"
+      ]
     },
     {
-      "name": "AdventJS",
-      "isActive": true,
-      "description": "Retos de programación en JavaScript para cada día de diciembre hasta Navidad",
-      "highlights": [
-        "+1 millón de visitas",
-        "Multidioma",
-        "JavaScript & TypeScript"
-      ],
-      "url": "https://adventjs.dev"
-    },
-    {
-      "name": "Codember",
-      "isActive": true,
-      "description": "Juego interactivo de programación con retos y secretos",
-      "highlights": [
-        "+2000 usuarios activos",
-        "Retos para cualquier lenguaje"
-      ],
-      "url": "https://codember.dev"
-    },
-    {
-      "name": "codi.link",
-      "isActive": true,
-      "description": "Playground de código HTML, CSS y JavaScript para compartir",
-      "highlights": [
-        "100k visitas al mes",
-        "Desarrollado por la comunidad"
-      ],
-      "url": "https://codi.link",
-      "github": "https://github.com/midudev/codi.link"
-    },
-    {
-      "name": "Pruebas Técnicas",
-      "isActive": true,
-      "description": "Lista de pruebas técnicas de empresas para practicar programación",
-      "highlights": [
-        "100% gratuito",
-        "+500 soluciones de la comunidad"
-      ],
-      "url": "https://pruebastecnicas.com",
-      "github": "https://github.com/midudev/pruebas-tecnicas"
-    },
-    {
-      "name": "miduConf",
-      "description": "Conferencia de programación en streaming para la comunidad hispanohablante con charlas top",
-      "highlights": [
-        "+15k tickets repartidos",
-        "+50k espectadores en directo"
-      ],
-      "url": "https://miduconf.com"
+      "name": "Aprendizaje continuo",
+      "keywords": [
+        "Buenas prácticas",
+        "Clean Code",
+        "SOLID"
+      ]
     }
   ]
 }

@@ -2,53 +2,11 @@
 import Section from "@/components/Section.astro";
 import cv from '@cv';
 
-// Import icons
-import JavaScriptIcon from '@/icons/javascript.astro';
-import TypeScriptIcon from '@/icons/type.astro';
-import HtmlIcon from '@/icons/html.astro';
-import CssIcon from '@/icons/css.astro';
-import TailwindIcon from '@/icons/tailwind.astro';
-import NodeIcon from '@/icons/node.astro';
-import ReactIcon from '@/icons/react.astro';
-import Node from '@/icons/node.astro';
-import GitIcon from '@/icons/git.astro';
-import GitHubIcon from '@/icons/GitHub.astro';
-import MySqlIcon from '@/icons/sql.astro';
-
-// Icons map for skills
-const skillIcons = {
-  'JavaScript': JavaScriptIcon,
-  'TypeScript': TypeScriptIcon,
-  'HTML': HtmlIcon,
-  'CSS': CssIcon,
-  'Tailwind': TailwindIcon,
-  'Node': NodeIcon,
-  'React': ReactIcon,
-  'Next.js': Node,
-  'Git': GitIcon,
-  'GitHub': GitHubIcon,
-  'MySQL': MySqlIcon
-};
 
 // Extract data from CV
 const { skills = [], languages = [], interests = [], awards = [], certificates = [] } = cv;
 
-// Function to group skills by category
-function groupSkills(skills) {
-  const categories = {};
-  
-  skills.forEach(skill => {
-    const category = skill.category || 'Other Skills';
-    if (!categories[category]) {
-      categories[category] = [];
-    }
-    categories[category].push(skill);
-  });
-  
-  return categories;
-}
-
-const skillCategories = groupSkills(skills);
+// No agrupamos por categorías, usamos todas las habilidades directamente
 const allCertificates = [...(certificates || []), ...(awards || [])].sort((a, b) => 
   new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime()
 );
@@ -66,32 +24,22 @@ const getDelay = (index, base = 0) => `${base + (index * 50)}ms`;
                     Technical Skills
                 </h3>
                 
-                <div class="space-y-8">
-                    {Object.entries(skillCategories).map(([category, skills], index) => (
-                        <div key={category} data-animate-on-load style={`--delay: ${getDelay(index, 100)}`}>
+                <div class="space-y-6">
+                    {skills.map((category, categoryIndex) => (
+                        <div key={category.name} data-animate-on-load style={`--delay: ${getDelay(categoryIndex, 100)}`}>
                             <h4 class="text-lg font-medium text-gray-300 mb-3">
-                                {category}
+                                {category.name}
                             </h4>
                             <div class="flex flex-wrap gap-2">
-                                {skills.map((skill) => (
+                                {category.keywords.map((keyword, keywordIndex) => (
                                     <span 
-                                        key={skill.name}
-                                        class="px-3 py-1.5 bg-gray-800 rounded-full text-sm text-gray-200 border border-gray-700 hover:bg-accent/10 hover:border-accent/30 hover:text-accent transition-colors flex items-center gap-2"
-                                        title={skill.name}
+                                        key={keyword}
+                                        class="px-3 py-1.5 bg-gray-800 rounded-full text-sm text-gray-200 border border-gray-700 hover:bg-accent/10 hover:border-accent/30 hover:text-accent transition-colors"
+                                        title={keyword}
+                                        style={`--delay: ${getDelay(keywordIndex, 50)}`}
+                                        data-animate-on-load
                                     >
-                                        {skillIcons[skill.name] ? (
-                                            <span class="w-4 h-4 flex-shrink-0 flex items-center">
-                                                {(() => {
-                                                    const Icon = skillIcons[skill.name];
-                                                    return <Icon />;
-                                                })()}
-                                            </span>
-                                        ) : (
-                                            <span class="w-4 h-4 flex-shrink-0"></span>
-                                        )}
-                                        <span class="truncate max-w-[100px]">
-                                            {skill.name}
-                                        </span>
+                                        {keyword}
                                     </span>
                                 ))}
                             </div>
@@ -148,14 +96,21 @@ const getDelay = (index, base = 0) => `${base + (index * 50)}ms`;
                         Interests
                     </h3>
                     
-                    <div class="flex flex-wrap gap-2">
+                    <div class="flex flex-col gap-4">
                         {interests.map((interest) => (
-                            <span 
-                                key={interest}
-                                class="px-3 py-1 bg-gray-800/50 rounded-full text-sm text-gray-200 border border-gray-700/50 hover:bg-accent/10 hover:border-accent/30 hover:text-accent transition-colors"
-                            >
-                                {interest}
-                            </span>
+                            <div>
+                                <h4 class="text-lg font-medium text-white mb-2">{interest.name}</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    {interest.keywords.map((keyword) => (
+                                        <span 
+                                            key={keyword}
+                                            class="px-3 py-1 bg-gray-800/50 rounded-full text-sm text-gray-200 border border-gray-700/50 hover:bg-accent/10 hover:border-accent/30 hover:text-accent transition-colors"
+                                        >
+                                            {keyword}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
                         ))}
                     </div>
                 </div>
