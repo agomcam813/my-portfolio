@@ -1,53 +1,82 @@
 ---
-import {ClientRouter} from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
+import '../styles/global.css';
+import BackToTop from '../components/BackToTop.astro';
+import ErrorBoundary from '../components/ErrorBoundary.astro';
+import Loading from '../components/Loading.astro';
+import Navbar from '../components/Navbar.astro';
 
 interface Props {
-    title: string;
+  title: string;
+  isLoading?: boolean;
+  error?: Error | null;
 }
 
-const {title} = Astro.props;
+const { title, isLoading = false, error = null } = Astro.props;
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width"/>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
-    <meta name="generator" content={Astro.generator}/>
-    <title>{title}</title>
-    <ClientRouter/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <meta name="generator" content={Astro.generator}/>
+  <title>{title}</title>
+  <ClientRouter/>
+  
+  <script>
+    // Add a class to html element when page is loaded
+    document.documentElement.classList.add('js-loaded');
+    
+    // Handle loading state
+    if (document.readyState === 'loading') {
+      document.documentElement.classList.add('js-loading');
+      window.addEventListener('load', () => {
+        document.documentElement.classList.remove('js-loading');
+        document.documentElement.classList.add('js-loaded');
+      });
+    }
+  </script>
 </head>
-<body>
-<div>
-    <slot/>
-</div>
-
+<body class="antialiased text-gray-300 bg-gray-900">
+  <Navbar />
+  <div class="min-h-screen pt-16">
+    {isLoading ? (
+      <Loading />
+    ) : error ? (
+      <ErrorBoundary error={error} />
+    ) : (
+      <>
+        <main>
+          <slot/>
+        </main>
+        <BackToTop />
+      </>
+    )}
+  </div>
+  
+  <style>
+    /* Smooth page load transition */
+    .js-loading *,
+    .js-loading *:before,
+    .js-loading *:after {
+      animation-play-state: paused !important;
+      transition: none !important;
+    }
+    
+    /* Fade in content when loaded */
+    .js-loading body {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    
+    .js-loaded body {
+      opacity: 1;
+    }
+  </style>
 </body>
 </html>
-
-<style is:global>
-    :root {
-        --accent: 136, 58, 234;
-        --accent-light: 224, 204, 250;
-        --accent-dark: 49, 10, 101;
-        --accent-gradient: linear-gradient(
-                45deg,
-                rgb(var(--accent)),
-                rgb(var(--accent-light)) 30%,
-                white 60%
-        );
-    }
-
-    html {
-        font-family: system-ui, sans-serif;
-        background: #13151a;
-        color: #fff;
-    }
-
-    body {
-        @apply grid place-content-center;
-    }
-
+<style>
     body > div {
         @apply container;
     }

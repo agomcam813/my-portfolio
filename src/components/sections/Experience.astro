@@ -1,5 +1,95 @@
 ---
 import Section from "@/components/Section.astro";
+import ExperienceItem from "@/components/items/ExperienceItem.astro";
+import cvData from '@cv';
+
+const { work = [], volunteer = [] } = cvData;
+
+// Sort experiences by start date (newest first)
+const sortedWork = [...work].sort((a, b) => 
+  new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+);
+
+const sortedVolunteer = [...volunteer].sort((a, b) => 
+  new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+);
 ---
 
-<Section title="Experience"></Section>
+<Section title="Experience">
+    <div class="relative">
+        {/* Timeline line */}
+        <div 
+            class="absolute left-4 top-0 bottom-0 w-0.5 bg-accent/20"
+            aria-hidden="true"
+        ></div>
+        
+        <div class="space-y-12">
+            {sortedWork.map((job, index) => (
+                <div 
+                    class="relative pl-12 group"
+                    data-animate-on-load
+                    style={`--delay: ${index * 100}ms`}
+                >
+                    {/* Timeline dot */}
+                    <div 
+                        class="absolute left-0 top-1 w-8 h-8 rounded-full bg-accent/10 border-2 border-accent flex items-center justify-center group-hover:bg-accent/20 transition-colors duration-300"
+                        aria-hidden="true"
+                    >
+                        <div class="w-2 h-2 rounded-full bg-accent"></div>
+                    </div>
+                    
+                    <ExperienceItem 
+                        key={`${job.name}-${index}`}
+                        name={job.name}
+                        position={job.position}
+                        url={job.url}
+                        startDate={job.startDate}
+                        endDate={job.endDate}
+                        summary={job.summary}
+                        highlights={job.highlights || []}
+                    />
+                </div>
+            ))}
+            
+            {sortedVolunteer.length > 0 && (
+                <div class="pt-8">
+                    <h3 
+                        class="text-2xl font-bold text-white mb-8 relative pl-12"
+                        data-animate-on-load
+                        style="--delay: 300ms"
+                    >
+                        Volunteer Experience
+                    </h3>
+                    
+                    {sortedVolunteer.map((volunteer, index) => (
+                        <div 
+                            class="relative pl-12 group"
+                            data-animate-on-load
+                            style={`--delay: ${(index + sortedWork.length) * 100}ms`}
+                        >
+                            {/* Timeline dot */}
+                            <div 
+                                class="absolute left-0 top-1 w-8 h-8 rounded-full bg-accent/10 border-2 border-accent flex items-center justify-center group-hover:bg-accent/20 transition-colors duration-300"
+                                aria-hidden="true"
+                            >
+                                <div class="w-2 h-2 rounded-full bg-accent"></div>
+                            </div>
+                            
+                            <ExperienceItem 
+                                key={`volunteer-${volunteer.organization}-${index}`}
+                                name={volunteer.organization}
+                                position={volunteer.position}
+                                url={volunteer.url}
+                                startDate={volunteer.startDate}
+                                endDate={volunteer.endDate}
+                                summary={volunteer.summary}
+                                highlights={volunteer.highlights || []}
+                                isVolunteer={true}
+                            />
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    </div>
+</Section>

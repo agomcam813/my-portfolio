@@ -1,0 +1,51 @@
+---
+const { project } = Astro.props;
+const { name, description, highlights = [], url, startDate, endDate } = project;
+
+const formatDate = (dateString) => {
+  if (!dateString) return 'Present';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+};
+
+const startDateFormatted = formatDate(startDate);
+const endDateFormatted = formatDate(endDate);
+---
+
+<article class="bg-gray-800/50 rounded-lg overflow-hidden hover:bg-gray-800/70 transition-colors">
+  <div class="p-6">
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-3">
+      <h3 class="text-xl font-semibold text-white">
+        {url ? (
+          <a 
+            href={url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="hover:text-accent transition-colors flex items-center"
+          >
+            {name}
+            <span class="ml-1.5 text-sm opacity-70">↗</span>
+          </a>
+        ) : name}
+      </h3>
+      <div class="text-sm text-gray-400 whitespace-nowrap">
+        {startDateFormatted} - {endDateFormatted}
+      </div>
+    </div>
+    
+    {description && (
+      <p class="text-gray-300 mb-4">{description}</p>
+    )}
+    
+    {highlights && highlights.length > 0 && (
+      <ul class="space-y-2 mt-4">
+        {highlights.map((highlight, index) => (
+          <li key={index} class="flex items-start">
+            <span class="text-accent mr-2">•</span>
+            <span class="text-gray-300">{highlight}</span>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</article>

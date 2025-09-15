@@ -1,0 +1,93 @@
+---
+const { 
+  name, 
+  position, 
+  url, 
+  startDate, 
+  endDate, 
+  summary, 
+  highlights = [],
+  isVolunteer = false
+} = Astro.props;
+
+const formatDate = (dateString) => {
+  if (!dateString) return 'Present';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+};
+
+const startDateFormatted = formatDate(startDate);
+const endDateFormatted = formatDate(endDate);
+---
+
+<article class="mb-8 group transition-all duration-300 hover:translate-x-1">
+  <header class="mb-3">
+    <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+      <div class="space-y-1">
+        <h3 class="text-xl font-bold text-white group-hover:text-accent transition-colors">
+          {name}
+        </h3>
+        <div class="flex flex-wrap items-center gap-2">
+          {url ? (
+            <a 
+              href={url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="text-accent hover:underline font-medium inline-flex items-center group/company"
+            >
+              {position}
+              <span class="ml-1 inline-flex items-center opacity-0 group-hover/company:opacity-100 transition-opacity">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                </svg>
+              </span>
+            </a>
+          ) : (
+            <span class="font-medium">{position}</span>
+          )}
+        </div>
+      </div>
+      
+      <div class="text-sm text-gray-400 bg-gray-800/50 px-3 py-1 rounded-full border border-gray-700/50">
+        {startDateFormatted} - {endDateFormatted}
+      </div>
+    </div>
+  </header>
+  
+  {summary && (
+    <p class="text-gray-400 mb-3">{summary}</p>
+  )}
+  
+  {highlights && highlights.length > 0 && (
+    <ul class="mt-3 space-y-2.5 pl-1">
+      {highlights.map((highlight, i) => (
+        <li 
+          key={i} 
+          class="flex group/item"
+          data-animate-on-load
+          style={`--delay: ${i * 50 + 100}ms`}
+        >
+          <span class="text-accent mr-3 mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent opacity-0 group-hover/item:opacity-100 transition-opacity"></span>
+          <span class="text-gray-300 group-hover/item:text-white transition-colors">
+            {highlight}
+          </span>
+        </li>
+      ))}
+    </ul>
+  )}
+  
+  <style>
+    /* Custom bullet point animation */
+    [data-animate-on-load] {
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+      transition-delay: var(--delay, 0ms);
+    }
+    
+    .js-interactive [data-animate-on-load] {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  </style>
+</article>

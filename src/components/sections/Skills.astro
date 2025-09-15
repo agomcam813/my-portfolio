@@ -1,5 +1,257 @@
 ---
 import Section from "@/components/Section.astro";
+import { skills, languages, interests, awards, certificates } from "@cv";
+
+// Group skills by category
+const skillCategories = skills.reduce((acc, skill) => {
+  const category = skill.category || 'Other';
+  if (!acc[category]) {
+    acc[category] = [];
+  }
+  acc[category].push(skill);
+  return acc;
+}, {});
+
+// Combine certificates and awards
+const allCertificates = [...(certificates || []), ...(awards || [])].sort((a, b) => 
+  new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime()
+);
+
+// Animation delay function
+const getDelay = (index: number, base = 0) => {
+  return `${base + (index * 50)}ms`;
+};
 ---
 
-<Section title="Skills"></Section>
+<Section title="Skills & Expertise">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Left Column - Technical Skills */}
+        <div class="space-y-10">
+            {/* Technical Skills */}
+            <div data-animate-on-load style={`--delay: ${getDelay(0)}`}>
+                <h3 class="text-2xl font-bold text-white mb-6 relative inline-flex items-center group">
+                    <span class="relative z-10">Technical Skills</span>
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-500"></span>
+                </h3>
+                
+                <div class="space-y-8 mt-6">
+                    {Object.entries(skillCategories).map(([category, skills], catIndex) => (
+                        <div 
+                            key={category}
+                            data-animate-on-load
+                            style={`--delay: ${getDelay(catIndex + 1, 100)}`}
+                            class="group/category"
+                        >
+                            <h4 class="text-sm font-medium text-gray-300 mb-3 flex items-center">
+                                <span class="w-2 h-2 rounded-full bg-accent mr-2 opacity-0 group-hover/category:opacity-100 transition-opacity"></span>
+                                {category}
+                            </h4>
+                            <div class="flex flex-wrap gap-2.5">
+                                {skills.map((skill, skillIndex) => (
+                                    <div 
+                                        key={skill.name}
+                                        data-animate-on-load
+                                        style={`--delay: ${getDelay(skillIndex, catIndex * 100 + 150)}`}
+                                        class="relative group/skill"
+                                    >
+                                        <span class="inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-medium bg-gray-800/50 text-gray-200 border border-gray-700/50 group-hover/skill:bg-accent/10 group-hover/skill:border-accent/30 group-hover/skill:text-accent transition-all duration-300">
+                                            {skill.name}
+                                            {skill.level && (
+                                                <span class="ml-1.5 text-xs opacity-70 group-hover/skill:opacity-100 transition-opacity">
+                                                    {skill.level}
+                                                </span>
+                                            )}
+                                        </span>
+                                        {skill.keywords && skill.keywords.length > 0 && (
+                                            <div class="absolute left-0 mt-1.5 opacity-0 invisible group-hover/skill:opacity-100 group-hover/skill:visible transition-all duration-300 transform -translate-y-1 group-hover/skill:translate-y-0 z-10">
+                                                <div class="bg-gray-800 border border-gray-700/50 rounded-lg p-2 shadow-lg min-w-[200px]">
+                                                    <div class="text-xs text-gray-400 mb-1">Related:</div>
+                                                    <div class="flex flex-wrap gap-1.5">
+                                                        {skill.keywords.slice(0, 5).map(keyword => (
+                                                            <span class="text-xs px-2 py-0.5 bg-gray-700/50 rounded-full">
+                                                                {keyword}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+        
+        {/* Right Column - Languages & More */}
+        <div class="space-y-10">
+            {/* Languages */}
+            {languages && languages.length > 0 && (
+                <div data-animate-on-load style="--delay: 100ms">
+                    <h3 class="text-2xl font-bold text-white mb-6 relative inline-flex items-center group">
+                        <span class="relative z-10">Languages</span>
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-500"></span>
+                    </h3>
+                    
+                    <div class="space-y-5">
+                        {languages.map((lang, index) => {
+                            const proficiency = lang.fluency === 'Native' ? '100%' : 
+                                             lang.fluency === 'Fluent' ? '90%' : 
+                                             lang.fluency === 'Intermediate' ? '70%' : '50%';
+                            
+                            return (
+                                <div 
+                                    key={lang.language}
+                                    data-animate-on-load
+                                    style={`--delay: ${getDelay(index, 150)}`}
+                                    class="group/language"
+                                >
+                                    <div class="flex justify-between text-sm mb-2">
+                                        <span class="font-medium text-gray-200 flex items-center">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-2 opacity-0 group-hover/language:opacity-100 transition-opacity"></span>
+                                            {lang.language}
+                                        </span>
+                                        <span class="text-gray-400">{lang.fluency}</span>
+                                    </div>
+                                    <div class="w-full bg-gray-800/30 rounded-full h-2 overflow-hidden">
+                                        <div 
+                                            class="bg-gradient-to-r from-accent to-accent/70 h-2 rounded-full transition-all duration-1000 ease-out" 
+                                            style={`width: 0;`}
+                                            data-width={proficiency}
+                                        ></div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
+            
+            {/* Interests */}
+            {interests && interests.length > 0 && (
+                <div data-animate-on-load style="--delay: 200ms">
+                    <h3 class="text-2xl font-bold text-white mb-6 relative inline-flex items-center group">
+                        <span class="relative z-10">Interests</span>
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-500"></span>
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2.5">
+                        {interests.map((interest, index) => (
+                            <span 
+                                key={interest.name}
+                                data-animate-on-load
+                                style={`--delay: ${getDelay(index, 250)}`}
+                                class="inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-medium bg-gray-800/50 text-gray-200 border border-gray-700/50 hover:bg-accent/10 hover:border-accent/30 hover:text-accent transition-all duration-300"
+                            >
+                                {interest.name}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            )}
+            
+            {/* Certifications & Awards */}
+            {allCertificates.length > 0 && (
+                <div data-animate-on-load style="--delay: 300ms">
+                    <h3 class="text-2xl font-bold text-white mb-6 relative inline-flex items-center group">
+                        <span class="relative z-10">Certifications & Awards</span>
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-500"></span>
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        {allCertificates.map((cert, index) => (
+                            <div 
+                                key={`${cert.name}-${index}`}
+                                data-animate-on-load
+                                style={`--delay: ${getDelay(index, 350)}`}
+                                class="group/cert relative pl-5 border-l-2 border-gray-800 hover:border-accent/50 transition-colors duration-300"
+                            >
+                                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-900 border-2 border-accent flex items-center justify-center">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-accent"></div>
+                                </div>
+                                
+                                <div class="pb-5">
+                                    <h4 class="font-medium text-gray-200 group-hover/cert:text-accent transition-colors">
+                                        {cert.name}
+                                    </h4>
+                                    {cert.issuer && (
+                                        <div class="text-sm text-gray-400 mt-1">{cert.issuer}</div>
+                                    )}
+                                    {cert.date && (
+                                        <div class="text-xs text-gray-500 mt-1">
+                                            {new Date(cert.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
+                                        </div>
+                                    )}
+                                    {cert.summary && (
+                                        <p class="text-sm text-gray-400 mt-1.5">{cert.summary}</p>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    </div>
+</Section>
+
+<script>
+    // Animate progress bars on scroll into view
+    document.addEventListener('astro:page-load', () => {
+        const progressBars = document.querySelectorAll('[data-width]');
+        
+        const animateProgressBars = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBar = entry.target;
+                    const width = progressBar.getAttribute('data-width');
+                    progressBar.style.width = width;
+                    observer.unobserve(progressBar);
+                }
+            });
+        };
+        
+        const observer = new IntersectionObserver(animateProgressBars, {
+            threshold: 0.1
+        });
+        
+        progressBars.forEach(bar => observer.observe(bar));
+    });
+</script>
+
+<style>
+    /* Custom animations */
+    [data-animate-on-load] {
+        opacity: 0;
+        transform: translateY(15px);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        transition-delay: var(--delay, 0ms);
+    }
+    
+    .js-interactive [data-animate-on-load] {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 3px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+</style>

@@ -1,22 +1,55 @@
 ---
-const {title} = Astro.props;
+const { title, id } = Astro.props;
 ---
 
-<section>
-    {title && <h2>{title}</h2>}
-    <slot/>
+<section 
+  id={id || undefined}
+  class={`max-w-4xl mx-auto mb-24 px-4 sm:px-6 lg:px-8 transition-all duration-500 ease-in-out transform opacity-0 translate-y-8`}
+  data-observe
+>
+  {title && (
+    <div class="mb-10">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 relative inline-block">
+        <span class="relative z-10">{title}</span>
+        <span class="absolute bottom-0 left-0 w-full h-2 bg-accent/20 -z-0"></span>
+      </h2>
+    </div>
+  )}
+  
+  <div class="space-y-12">
+    <slot />
+  </div>
 </section>
 
 <style>
-    section{
-        max-width: 700px;
-        margin: 0 auto 72px;
-    }
-
-    h2{
-        margin-bottom: 8px;
-        font-weight: 700;
-        line-height: 1.5;
-        font-size: 1.5rem;
-    }
+  section[data-observe] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  section[data-observe].visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 </style>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+    
+    // Observe all sections with data-observe attribute
+    document.querySelectorAll('section[data-observe]').forEach(section => {
+      observer.observe(section);
+    });
+  });
+</script>

@@ -1,5 +1,42 @@
 ---
 import Section from "@/components/Section.astro";
+import EducationItem from "@/components/items/EducationItem.astro";
+import { education } from "@cv";
+
+// Sort education by start date (newest first)
+const sortedEducation = [...education].sort((a, b) => 
+  new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
+);
 ---
 
-<Section title="Education"></Section>
+<Section title="Education">
+    <div class="relative">
+        {/* Vertical line */}
+        <div 
+            class="absolute left-6 top-0 bottom-0 w-0.5 bg-accent/20"
+            aria-hidden="true"
+        ></div>
+        
+        <div class="space-y-10">
+            {sortedEducation.map((edu, index) => (
+                <div 
+                    class="relative"
+                    data-animate-on-load
+                    style={`--delay: ${index * 100}ms`}
+                >
+                    <EducationItem 
+                        key={`${edu.institution}-${index}`}
+                        institution={edu.institution}
+                        area={edu.area}
+                        studyType={edu.studyType}
+                        startDate={edu.startDate}
+                        endDate={edu.endDate}
+                        gpa={edu.score}
+                        courses={edu.courses}
+                        website={edu.url}
+                    />
+                </div>
+            ))}
+        </div>
+    </div>
+</Section>

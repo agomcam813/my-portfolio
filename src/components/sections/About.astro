@@ -1,7 +1,14 @@
 ---
 import Section from "@/components/Section.astro";
+import cvData from '../../../cv.json';
+
+const { summary } = cvData.basics;
 ---
 
 <Section title="About">
-
+  <div class="prose prose-invert max-w-none">
+    <p class="text-lg text-gray-300 leading-relaxed">
+      {summary}
+    </p>
+  </div>
 </Section>

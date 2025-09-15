@@ -1,0 +1,119 @@
+---
+const navItems = [
+  { name: 'Inicio', href: '#home' },
+  { name: 'Sobre Mí', href: '#about'},
+  { name: 'Experiencia', href: '#experience'},
+  { name: 'Educación', href: '#education' },
+  { name: 'Proyectos', href: '#projects'},
+  { name: 'Habilidades', href: '#skills'},
+];
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-sm border-b border-gray-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <div class="flex items-center">
+        <a href="#home" class="text-white text-xl font-bold">
+          <span class="text-accent">Portfolio</span>
+        </a>
+      </div>
+      
+      {/* Desktop Navigation */}
+      <nav class="hidden md:flex items-center space-x-1">
+        {navItems.map((item) => (
+          <a 
+            href={item.href}
+            class="px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800 rounded-md transition-colors duration-200 text-sm font-medium flex items-center gap-2"
+            data-nav-link
+          >
+
+            <span>{item.name}</span>
+          </a>
+        ))}
+      </nav>
+      
+      {/* Mobile menu button */}
+      <div class="md:hidden flex items-center">
+        <button 
+          id="mobile-menu-button"
+          class="text-gray-300 hover:text-white focus:outline-none"
+          aria-label="Toggle menu"
+        >
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  {/* Mobile menu */}
+  <div id="mobile-menu" class="md:hidden hidden bg-gray-900/95 border-t border-gray-800">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      {navItems.map((item) => (
+        <a 
+          href={item.href}
+          class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 rounded-md transition-colors duration-200 text-base font-medium flex items-center gap-3"
+          data-nav-link
+        >
+
+          <span>{item.name}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  // Toggle mobile menu
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+    
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('[data-nav-link]').forEach(link => {
+      link.addEventListener('click', () => {
+        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+        }
+      });
+    });
+    
+    // Add active class to current section in navigation
+    const handleNavigation = () => {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('[data-nav-link]');
+      
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              const isActive = link.getAttribute('href') === `#${id}`;
+              link.classList.toggle('text-accent', isActive);
+              link.classList.toggle('font-semibold', isActive);
+              
+              // Update the icon color for the active link
+              const icon = link.querySelector('span:first-child');
+              if (icon) {
+                icon.classList.toggle('text-white', isActive);
+              }
+            });
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      sections.forEach(section => observer.observe(section));
+    };
+    
+    // Run on page load and after navigation
+    handleNavigation();
+    document.addEventListener('astro:page-load', handleNavigation);
+  });
+</script>

@@ -1,6 +1,8 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
+// Import sections
 import Experience from '@/components/sections/Experience.astro';
 import Education from '@/components/sections/Education.astro';
 import Skills from '@/components/sections/Skills.astro';
@@ -8,27 +10,123 @@ import Projects from '@/components/sections/Projects.astro';
 import Hero from '@/components/sections/Hero.astro';
 import About from '@/components/sections/About.astro';
 import KeyboardManager from '@/components/KeyboardManager.astro';
+
+// Load CV data
+import cvData from '../../cv.json';
+
+// Set loading state to false by default
+const isLoading = false;
+let error = null;
+
+// You can add error handling here if needed
+// try {
+//   // Any async data fetching can go here
+// } catch (err) {
+//   error = err;
+//   console.error('Error loading page data:', err);
+// }
 ---
 
-<Layout title="Home">
-    <main>
-        <Hero/>
-        <About/>
-        <Experience/>
-        <Education/>
-        <Projects/>
-        <Skills/>
+<Layout title="Home" {isLoading} {error}>
+  {/* Add a loading overlay that will be shown when navigating between pages */}
+  <div id="page-transition" class="fixed inset-0 bg-gray-900/90 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="text-center">
+      <div class="w-16 h-16 border-4 border-accent/20 border-t-accent rounded-full animate-spin mx-auto"></div>
+      <p class="mt-4 text-accent font-medium">Loading...</p>
+    </div>
+  </div>
+    <main class="py-8 md:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="space-y-24 md:space-y-32">
+            <section id="home" class="min-h-screen flex items-center">
+                <Hero />
+            </section>
+            
+            <section id="about">
+                <About />
+            </section>
+            
+            <section id="experience">
+                <Experience />
+            </section>
+            
+            <section id="education">
+                <Education />
+            </section>
+            
+            <section id="projects">
+                <Projects />
+            </section>
     </main>
-    <KeyboardManager/>
+  </div>
+  
+  <KeyboardManager />
+  
+  <script>
+    // Handle page transitions
+    document.addEventListener('astro:page-load', () => {
+      // Hide the loading overlay when the new page has loaded
+      const pageTransition = document.getElementById('page-transition');
+      if (pageTransition) {
+        pageTransition.classList.add('opacity-0', 'pointer-events-none');
+      }
+      
+      // Add a class to the body when the page is fully interactive
+      document.documentElement.classList.add('js-interactive');
+    });
 
-</Layout>
-
-<style>
-    main{
-        padding: 4rem;
-        margin: auto;
-        width: 100%;
-
-
+    // Show loading overlay when navigating to a new page
+    document.addEventListener('astro:before-preparation', () => {
+      const pageTransition = document.getElementById('page-transition');
+      if (pageTransition) {
+        pageTransition.classList.remove('opacity-0', 'pointer-events-none');
+      }
+    });
+    
+    // Handle initial page load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add a small delay to ensure all styles are loaded
+      setTimeout(() => {
+        document.documentElement.classList.add('js-interactive');
+      }, 100);
+    });
+  </script>
+  
+  <style>
+    /* Smooth transitions for interactive elements */
+    a, button, input, textarea, select, .transition-all {
+      transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 200ms;
     }
-</style>
+    
+    /* Reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+    
+    /* Page load animation */
+    .js-loading [data-animate-on-load] {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    
+    .js-interactive [data-animate-on-load] {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    
+    /* Add staggered animations for better visual hierarchy */
+    [data-animate-on-load] {
+      --delay: 0ms;
+      transition-delay: var(--delay);
+    }
+  </style>
+</Layout>
