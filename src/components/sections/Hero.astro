@@ -6,11 +6,12 @@ import Section from "@/components/Section.astro";
 import GitHub from "@/icons/GitHub.astro";
 import LinkedIn from "@/icons/LinkedIn.astro";
 import X from "@/icons/X.astro";
-import WorldMap from "@/icons/WorldMap.astro";
+import Mail from "@/icons/Mail.astro";
+import Download from "@/icons/Download.astro";
 
 
-const { name, label, image, location, profiles, phone, email, url } = basics
-const { city, region, countryCode } = location
+const { name, label, image, location, profiles, email, url } = basics
+
 
 // Devuelve el componente correcto
 export const getSocialIcon = (network) => {
@@ -18,15 +19,31 @@ export const getSocialIcon = (network) => {
         GitHub,
         LinkedIn,
         X,
-        WorldMap,
+        Mail,
     };
+    
+    // Si el perfil es un correo, devolvemos el ícono de correo
+    if (network === 'Email') return Mail;
     return icons[network];
 };
 ---
 
 <Section id="home">
     <div class="flex flex-col lg:flex-row items-center justify-between gap-8" data-animate-on-load style="--delay: 100ms">
-        <div class="flex-1">
+        {/* Contenedor de la foto (arriba en móvil, derecha en desktop) */}
+        <figure class="w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-accent shadow-2xl group mx-auto lg:order-2" data-animate-on-load style="--delay: 100ms">
+            <img
+                src={image}
+                alt={name}
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                width="320"
+                height="320"
+                loading="lazy"
+            />
+        </figure>
+
+        {/* Contenedor del texto (centrado en móvil, izquierda en desktop) */}
+        <div class="flex-1 w-full lg:w-auto text-center lg:text-left">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 leading-tight" data-animate-on-load style="--delay: 200ms">
                 {name}
             </h1>
@@ -34,80 +51,100 @@ export const getSocialIcon = (network) => {
                 {label}
             </h2>
 
-            <div class="space-y-3 mb-8" data-animate-on-load style="--delay: 600ms">
-                <div class="flex items-center text-gray-300">
-                    <span class="w-6 h-6 mr-2">📍</span>
-                    <span>{city}, {region}, {countryCode}</span>
-                </div>
-                {phone && (
-                        <div class="flex items-center text-gray-300">
-                            <span class="w-6 h-6 mr-2">📞</span>
-                            <a
-                                    href={`tel:${phone.replace(/[^0-9+]/g, '')}`}
-                                    class="hover:text-accent transition-colors"
-                            >
-                                {phone}
-                            </a>
-                        </div>
-                )}
-                {email && (
-                        <div class="flex items-center text-gray-300">
-                            <span class="w-6 h-6 mr-2">✉️</span>
-                            <a
-                                    href={`mailto:${email}`}
-                                    class="hover:text-accent transition-colors"
-                            >
-                                {email}
-                            </a>
-                        </div>
-                )}
-                {url && (
-                        <div class="flex items-center text-gray-300">
-                            <span class="w-6 h-6 mr-2">🌐</span>
-                            <a
-                                    href={url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="hover:text-accent transition-colors"
-                            >
-                                {url.replace(/^https?:\/\//, '').replace(/\/$/, '')}
-                            </a>
-                        </div>
-                )}
-            </div>
-
-            {profiles && profiles.length > 0 && (
-                    <div class="flex flex-wrap gap-3 mt-6" data-animate-on-load style="--delay: 700ms">
-                        {profiles.map(profile => {
+            {/* Sección de redes sociales (solo visible en desktop) */}
+            <div class="hidden lg:block">
+                {profiles && (profiles.length > 0 || url || email) && (
+                    <div class="flex flex-wrap gap-4 mt-6">
+                        {profiles.map((profile) => {
                             const Icon = getSocialIcon(profile.network);
                             return (
-                                    <a
-                                            href={profile.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            class="flex items-center px-4 py-2 bg-gray-800/50 hover:bg-accent/20 rounded-lg transition-all duration-200 hover:scale-105"
-                                            title={profile.network}
-                                            data-social-link
-                                    >
-                                        <Icon class="w-5 h-5 mr-2 text-accent" />
-                                    </a>
+                                <a
+                                    href={profile.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-gray-300 hover:bg-accent hover:text-white transition-colors"
+                                    aria-label={profile.network}
+                                    data-animate-on-load
+                                    style={`--delay: ${500 + (profiles.indexOf(profile) * 100)}ms`}
+                                >
+                                    <Icon class="w-5 h-5" />
+                                </a>
                             );
                         })}
-                    </div>
+                        {email && (
+                            <a
+                                href={`mailto:${email}`}
+                                class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-gray-300 hover:bg-accent hover:text-white transition-colors"
+                                aria-label="Email"
+                                data-animate-on-load
+                                style={`--delay: ${500 + (profiles.length * 100) + 100}ms`}
+                            >
+                                <Mail class="w-5 h-5" />
+                            </a>
+                        )}
+                        <a
+                            href="./files/CV-Antonio-Gomez-Camarena.pdf"
+                            download
+                            class="flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-white hover:bg-accent/90 transition-colors text-sm font-medium"
+                            aria-label="Descargar CV en formato PDF"
+                            title="Descargar CV (PDF)"
+                            data-animate-on-load
+                            style={`--delay: ${500 + (profiles.length * 100) + 200}ms`}
+                        >
+                            <Download class="w-4 h-4" />
+                            <span class="hidden sm:inline">Descargar CV</span>
+                            <span class="sm:hidden">CV</span>
+                        </a>
+                </div>
             )}
         </div>
 
-        <figure class="w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-accent shadow-2xl group" data-animate-on-load style="--delay: 300ms">
-            <img
-                    src={image}
-                    alt={name}
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    width="320"
-                    height="320"
-                    loading="eager"
-                    data-profile-image
-            />
-        </figure>
+        {/* Contenedor de redes sociales (solo visible en móvil) */}
+        <div class="lg:hidden w-full">
+            {profiles && profiles.length > 0 && (
+                <div class="flex flex-wrap justify-center gap-4 mt-8">
+                    {profiles.map((profile) => {
+                        const Icon = getSocialIcon(profile.network);
+                        return (
+                            <a
+                                href={profile.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 text-gray-300 hover:bg-accent hover:text-white transition-colors"
+                                aria-label={profile.network}
+                                data-animate-on-load
+                                style={`--delay: ${500 + (profiles.indexOf(profile) * 100)}ms`}
+                            >
+                                <Icon class="w-6 h-6" />
+                            </a>
+                        );
+                    })}
+                    {email && (
+                        <a
+                            href={`mailto:${email}`}
+                            class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 text-gray-300 hover:bg-accent hover:text-white transition-colors"
+                            aria-label="Email"
+                            data-animate-on-load
+                            style={`--delay: ${500 + (profiles.length * 100) + 100}ms`}
+                        >
+                            <Mail class="w-6 h-6" />
+                        </a>
+                    )}
+                    <div class="relative group w-full flex justify-center mt-4" data-animate-on-load style={`--delay: ${500 + (profiles.length * 100) + 200}ms`}>
+                        <a
+                            href="./files/CV-Antonio-Gomez-Camarena.pdf"
+                            download
+                            class="flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-white hover:bg-accent/90 transition-colors text-base font-medium w-auto relative z-10"
+                            aria-label="Descargar CV en formato PDF"
+                            title="Descargar CV (PDF - Antonio Gómez Camarena)"
+                        >
+                            <Download class="w-5 h-5" />
+                            <span>Descargar CV</span>
+                        </a>
+                    </div>
+                </div>
+            )}
+        </div>
     </div>
 </Section>
 
