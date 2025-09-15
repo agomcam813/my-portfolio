@@ -1,82 +1,96 @@
 ---
 import Section from "@/components/Section.astro";
-import { skills, languages, interests, awards, certificates } from "@cv";
+import cv from '../../../cv.json';
 
-// Group skills by category
-const skillCategories = skills.reduce((acc, skill) => {
-  const category = skill.category || 'Other';
-  if (!acc[category]) {
-    acc[category] = [];
-  }
-  acc[category].push(skill);
-  return acc;
-}, {});
+// Importar íconos
+import JavaScriptIcon from '../../icons/javascript.astro';
+import TypeScriptIcon from '../../icons/type.astro';
+import HtmlIcon from '../../icons/html.astro';
+import CssIcon from '../../icons/css.astro';
+import TailwindIcon from '../../icons/tailwind.astro';
+import NodeIcon from '../../icons/node.astro';
+import ReactIcon from '../../icons/react.astro';
+import Node from '../../icons/node.astro';
+import GitIcon from '../../icons/git.astro';
+import GitHubIcon from '../../icons/GitHub.astro';
+import MySqlIcon from '../../icons/sql.astro';
 
-// Combine certificates and awards
+// Mapa de íconos para las habilidades
+const skillIcons = {
+  'JavaScript': JavaScriptIcon,
+  'TypeScript': TypeScriptIcon,
+  'HTML': HtmlIcon,
+  'CSS': CssIcon,
+  'Tailwind': TailwindIcon,
+  'Node': NodeIcon,
+  'React': ReactIcon,
+  'Next.js': Node,
+  'Git': GitIcon,
+  'GitHub': GitHubIcon,
+  'MySQL': MySqlIcon
+};
+
+// Extraer datos del CV
+const { skills = [], languages = [], interests = [], awards = [], certificates = [] } = cv;
+
+// Función para agrupar habilidades por categoría
+function groupSkills(skills) {
+  const categories = {};
+  
+  skills.forEach(skill => {
+    const category = skill.category || 'Otras Habilidades';
+    if (!categories[category]) {
+      categories[category] = [];
+    }
+    categories[category].push(skill);
+  });
+  
+  return categories;
+}
+
+const skillCategories = groupSkills(skills);
 const allCertificates = [...(certificates || []), ...(awards || [])].sort((a, b) => 
   new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime()
 );
 
-// Animation delay function
-const getDelay = (index: number, base = 0) => {
-  return `${base + (index * 50)}ms`;
-};
+// Función para el retraso de animación
+const getDelay = (index, base = 0) => `${base + (index * 50)}ms`;
 ---
 
-<Section title="Skills & Expertise">
+<Section title="Habilidades">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* Left Column - Technical Skills */}
+        {/* Columna izquierda - Habilidades técnicas */}
         <div class="space-y-10">
-            {/* Technical Skills */}
-            <div data-animate-on-load style={`--delay: ${getDelay(0)}`}>
-                <h3 class="text-2xl font-bold text-white mb-6 relative inline-flex items-center group">
-                    <span class="relative z-10">Technical Skills</span>
-                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-500"></span>
+            {/* Habilidades técnicas */}
+            <div>
+                <h3 class="text-2xl font-bold text-white mb-6">
+                    Habilidades Técnicas
                 </h3>
                 
-                <div class="space-y-8 mt-6">
-                    {Object.entries(skillCategories).map(([category, skills], catIndex) => (
-                        <div 
-                            key={category}
-                            data-animate-on-load
-                            style={`--delay: ${getDelay(catIndex + 1, 100)}`}
-                            class="group/category"
-                        >
-                            <h4 class="text-sm font-medium text-gray-300 mb-3 flex items-center">
-                                <span class="w-2 h-2 rounded-full bg-accent mr-2 opacity-0 group-hover/category:opacity-100 transition-opacity"></span>
+                <div class="space-y-8">
+                    {Object.entries(skillCategories).map(([category, skills], index) => (
+                        <div key={category} data-animate-on-load style={`--delay: ${getDelay(index, 100)}`}>
+                            <h4 class="text-lg font-medium text-gray-300 mb-3">
                                 {category}
                             </h4>
-                            <div class="flex flex-wrap gap-2.5">
+                            <div class="flex flex-wrap gap-2">
                                 {skills.map((skill, skillIndex) => (
-                                    <div 
+                                    <span 
                                         key={skill.name}
-                                        data-animate-on-load
-                                        style={`--delay: ${getDelay(skillIndex, catIndex * 100 + 150)}`}
-                                        class="relative group/skill"
+                                        class="px-3 py-1.5 bg-gray-800 rounded-full text-sm text-gray-200 border border-gray-700 hover:bg-accent/10 hover:border-accent/30 hover:text-accent transition-colors flex items-center gap-2"
+                                        title={skill.name}
                                     >
-                                        <span class="inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-medium bg-gray-800/50 text-gray-200 border border-gray-700/50 group-hover/skill:bg-accent/10 group-hover/skill:border-accent/30 group-hover/skill:text-accent transition-all duration-300">
-                                            {skill.name}
-                                            {skill.level && (
-                                                <span class="ml-1.5 text-xs opacity-70 group-hover/skill:opacity-100 transition-opacity">
-                                                    {skill.level}
-                                                </span>
-                                            )}
-                                        </span>
-                                        {skill.keywords && skill.keywords.length > 0 && (
-                                            <div class="absolute left-0 mt-1.5 opacity-0 invisible group-hover/skill:opacity-100 group-hover/skill:visible transition-all duration-300 transform -translate-y-1 group-hover/skill:translate-y-0 z-10">
-                                                <div class="bg-gray-800 border border-gray-700/50 rounded-lg p-2 shadow-lg min-w-[200px]">
-                                                    <div class="text-xs text-gray-400 mb-1">Related:</div>
-                                                    <div class="flex flex-wrap gap-1.5">
-                                                        {skill.keywords.slice(0, 5).map(keyword => (
-                                                            <span class="text-xs px-2 py-0.5 bg-gray-700/50 rounded-full">
-                                                                {keyword}
-                                                            </span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        {skillIcons[skill.name] ? (
+                                            <span class="w-4 h-4 flex-shrink-0">
+                                                <skillIcons[skill.name] />
+                                            </span>
+                                        ) : (
+                                            <span class="w-4 h-4 flex-shrink-0"></span>
                                         )}
-                                    </div>
+                                        <span class="truncate max-w-[100px]">
+                                            {skill.name}
+                                        </span>
+                                    </span>
                                 ))}
                             </div>
                         </div>
@@ -85,41 +99,33 @@ const getDelay = (index: number, base = 0) => {
             </div>
         </div>
         
-        {/* Right Column - Languages & More */}
+        {/* Columna derecha - Idiomas y más */}
         <div class="space-y-10">
-            {/* Languages */}
+            {/* Idiomas */}
             {languages && languages.length > 0 && (
                 <div data-animate-on-load style="--delay: 100ms">
-                    <h3 class="text-2xl font-bold text-white mb-6 relative inline-flex items-center group">
-                        <span class="relative z-10">Languages</span>
-                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-500"></span>
+                    <h3 class="text-2xl font-bold text-white mb-6">
+                        Idiomas
                     </h3>
                     
-                    <div class="space-y-5">
+                    <div class="space-y-4">
                         {languages.map((lang, index) => {
                             const proficiency = lang.fluency === 'Native' ? '100%' : 
                                              lang.fluency === 'Fluent' ? '90%' : 
                                              lang.fluency === 'Intermediate' ? '70%' : '50%';
                             
                             return (
-                                <div 
-                                    key={lang.language}
-                                    data-animate-on-load
-                                    style={`--delay: ${getDelay(index, 150)}`}
-                                    class="group/language"
-                                >
-                                    <div class="flex justify-between text-sm mb-2">
-                                        <span class="font-medium text-gray-200 flex items-center">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-2 opacity-0 group-hover/language:opacity-100 transition-opacity"></span>
+                                <div key={lang.language} class="mb-4">
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span class="font-medium text-gray-200">
                                             {lang.language}
                                         </span>
                                         <span class="text-gray-400">{lang.fluency}</span>
                                     </div>
                                     <div class="w-full bg-gray-800/30 rounded-full h-2 overflow-hidden">
                                         <div 
-                                            class="bg-gradient-to-r from-accent to-accent/70 h-2 rounded-full transition-all duration-1000 ease-out" 
-                                            style={`width: 0;`}
-                                            data-width={proficiency}
+                                            class="bg-gradient-to-r from-accent to-accent/70 h-2 rounded-full" 
+                                            style={`width: ${proficiency};`}
                                         ></div>
                                     </div>
                                 </div>
@@ -129,65 +135,52 @@ const getDelay = (index: number, base = 0) => {
                 </div>
             )}
             
-            {/* Interests */}
+            {/* Intereses */}
             {interests && interests.length > 0 && (
                 <div data-animate-on-load style="--delay: 200ms">
-                    <h3 class="text-2xl font-bold text-white mb-6 relative inline-flex items-center group">
-                        <span class="relative z-10">Interests</span>
-                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-500"></span>
+                    <h3 class="text-2xl font-bold text-white mb-6">
+                        Intereses
                     </h3>
                     
-                    <div class="flex flex-wrap gap-2.5">
+                    <div class="flex flex-wrap gap-2">
                         {interests.map((interest, index) => (
                             <span 
-                                key={interest.name}
-                                data-animate-on-load
-                                style={`--delay: ${getDelay(index, 250)}`}
-                                class="inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-medium bg-gray-800/50 text-gray-200 border border-gray-700/50 hover:bg-accent/10 hover:border-accent/30 hover:text-accent transition-all duration-300"
+                                key={interest}
+                                class="px-3 py-1 bg-gray-800/50 rounded-full text-sm text-gray-200 border border-gray-700/50 hover:bg-accent/10 hover:border-accent/30 hover:text-accent transition-colors"
                             >
-                                {interest.name}
+                                {interest}
                             </span>
                         ))}
                     </div>
                 </div>
             )}
             
-            {/* Certifications & Awards */}
+            {/* Certificaciones y premios */}
             {allCertificates.length > 0 && (
                 <div data-animate-on-load style="--delay: 300ms">
-                    <h3 class="text-2xl font-bold text-white mb-6 relative inline-flex items-center group">
-                        <span class="relative z-10">Certifications & Awards</span>
-                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-500"></span>
+                    <h3 class="text-2xl font-bold text-white mb-6">
+                        Certificaciones y Premios
                     </h3>
                     
                     <div class="space-y-4">
                         {allCertificates.map((cert, index) => (
                             <div 
                                 key={`${cert.name}-${index}`}
-                                data-animate-on-load
-                                style={`--delay: ${getDelay(index, 350)}`}
-                                class="group/cert relative pl-5 border-l-2 border-gray-800 hover:border-accent/50 transition-colors duration-300"
+                                class="relative pl-5 border-l-2 border-gray-800 hover:border-accent/50 transition-colors py-2"
                             >
-                                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-900 border-2 border-accent flex items-center justify-center">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-accent"></div>
-                                </div>
+                                <div class="absolute -left-[9px] top-4 w-3 h-3 rounded-full bg-gray-900 border-2 border-accent"></div>
                                 
-                                <div class="pb-5">
-                                    <h4 class="font-medium text-gray-200 group-hover/cert:text-accent transition-colors">
-                                        {cert.name}
-                                    </h4>
-                                    {cert.issuer && (
-                                        <div class="text-sm text-gray-400 mt-1">{cert.issuer}</div>
-                                    )}
-                                    {cert.date && (
-                                        <div class="text-xs text-gray-500 mt-1">
-                                            {new Date(cert.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
-                                        </div>
-                                    )}
-                                    {cert.summary && (
-                                        <p class="text-sm text-gray-400 mt-1.5">{cert.summary}</p>
-                                    )}
-                                </div>
+                                <h4 class="font-medium text-gray-200">
+                                    {cert.name || cert.title}
+                                </h4>
+                                {cert.issuer && (
+                                    <div class="text-sm text-gray-400 mt-1">{cert.issuer}</div>
+                                )}
+                                {cert.date && (
+                                    <div class="text-xs text-gray-500 mt-1">
+                                        {new Date(cert.date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long' })}
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -198,35 +191,39 @@ const getDelay = (index: number, base = 0) => {
 </Section>
 
 <script>
-    // Animate progress bars on scroll into view
+    // Animar elementos al hacer scroll
     document.addEventListener('astro:page-load', () => {
-        const progressBars = document.querySelectorAll('[data-width]');
+        // Añadir clase al body cuando la página esté lista
+        document.documentElement.classList.add('js-interactive');
         
-        const animateProgressBars = (entries, observer) => {
+        // Animar elementos al hacer scroll
+        const animateOnScroll = (entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const progressBar = entry.target;
-                    const width = progressBar.getAttribute('data-width');
-                    progressBar.style.width = width;
-                    observer.unobserve(progressBar);
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
                 }
             });
         };
         
-        const observer = new IntersectionObserver(animateProgressBars, {
-            threshold: 0.1
+        const observer = new IntersectionObserver(animateOnScroll, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         });
         
-        progressBars.forEach(bar => observer.observe(bar));
+        document.querySelectorAll('[data-animate-on-load]').forEach(el => {
+            observer.observe(el);
+        });
     });
 </script>
 
 <style>
-    /* Custom animations */
+    /* Animaciones personalizadas */
     [data-animate-on-load] {
         opacity: 0;
-        transform: translateY(15px);
-        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         transition-delay: var(--delay, 0ms);
     }
     

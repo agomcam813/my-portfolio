@@ -88,22 +88,6 @@
       ]
     }
   ],
-  "awards": [
-    {
-      "title": "Award",
-      "date": "2014-11-01",
-      "awarder": "Company",
-      "summary": "There is no spoon."
-    }
-  ],
-  "certificates": [
-    {
-      "name": "Certificate",
-      "date": "2021-11-07",
-      "issuer": "Company",
-      "url": "https://certificate.com"
-    }
-  ],
   "publications": [
     {
       "name": "Publication",
@@ -226,19 +210,6 @@
     {
       "language": "Spanish",
       "fluency": "Native speaker"
-    },
-    {
-      "language": "English",
-      "fluency": "Advanced"
-    }
-  ],
-  "interests": [
-    {
-      "name": "Wildlife",
-      "keywords": [
-        "Ferrets",
-        "Unicorns"
-      ]
     }
   ],
   "projects": [
