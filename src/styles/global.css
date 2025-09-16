@@ -21,6 +21,6 @@
   }
   
   body {
-    @apply min-h-screen w-full overflow-x-hidden;
+    @apply min-h-screen w-full flex justify-center overflow-x-hidden;
   }
 }
