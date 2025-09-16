@@ -19,11 +19,11 @@ const sortedVolunteer = [...volunteer].sort((a, b) =>
     <div class="relative">
         {/* Main timeline line */}
         <div 
-            class="absolute left-4 top-0 bottom-0 w-0.5 bg-accent/20"
+            class="absolute left-4 top-0 bottom-0 w-0.5 bg-accent/20 z-0"
             aria-hidden="true"
         ></div>
         
-        <div class="space-y-12">
+        <div class="relative space-y-12">
             {sortedWork.map((job, index) => (
                 <div 
                     class="relative pl-12 group"
@@ -32,7 +32,7 @@ const sortedVolunteer = [...volunteer].sort((a, b) =>
                 >
                     {/* Timeline dot with icon */}
                     <div
-                        class="absolute left-0 top-1 w-8 h-8 rounded-full bg-accent/10 border-2 border-accent flex items-center justify-center group-hover:bg-accent/20 transition-all duration-300 z-10"
+                        class="absolute left-0 top-0 w-8 h-8 rounded-full bg-accent/10 border-2 border-accent flex items-center justify-center group-hover:bg-accent/20 transition-all duration-300 z-10"
                         aria-hidden="true"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
@@ -43,12 +43,14 @@ const sortedVolunteer = [...volunteer].sort((a, b) =>
                     
                     {/* Connecting line between dots */}
                     {index < sortedWork.length - 1 && (
-                        <div 
-                            class="absolute left-4 top-8 h-[calc(100%+2.5rem)] w-0.5 bg-accent/30"
-                            aria-hidden="true"
-                        ></div>
+                            <div
+                                    class="absolute left-4 w-0.5 bg-accent/30"
+                                    style="top: 2rem; bottom: -2rem;"
+                                    aria-hidden="true"
+                            ></div>
                     )}
-                    
+
+
                     <ExperienceItem 
                         key={`${job.name}-${index}`}
                         name={job.name}
@@ -80,7 +82,7 @@ const sortedVolunteer = [...volunteer].sort((a, b) =>
                         >
                             {/* Volunteer timeline dot with icon */}
                             <div 
-                                class="absolute left-0 top-1 w-8 h-8 rounded-full bg-purple-500/10 border-2 border-purple-500 flex items-center justify-center group-hover:bg-purple-500/20 transition-all duration-300 z-10"
+                                class="absolute left-0 top-0 w-8 h-8 rounded-full bg-purple-500/10 border-2 border-purple-500 flex items-center justify-center group-hover:bg-purple-500/20 transition-all duration-300 z-10"
                                 aria-hidden="true"
                             >
                                 <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -91,7 +93,8 @@ const sortedVolunteer = [...volunteer].sort((a, b) =>
                             {/* Connecting line between volunteer dots */}
                             {index < sortedVolunteer.length - 1 && (
                                 <div 
-                                    class="absolute left-4 top-8 h-[calc(100%+2.5rem)] w-0.5 bg-purple-500/30"
+                                    class="absolute left-4 w-0.5 bg-purple-500/30 z-0"
+                                    style="top: 2rem; height: calc(100% + 2rem)"
                                     aria-hidden="true"
                                 ></div>
                             )}
