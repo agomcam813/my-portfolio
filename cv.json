@@ -110,6 +110,7 @@
         "Firebase",
         "Supabase",
         "Render",
+        "Vercel",
         "PyCharm",
         "IntelliJ IDEA",
         "Visual Studio Code",
@@ -156,7 +157,27 @@
       ],
       "url": "https://github.com/agomcam813/kanbanAntonioBackend",
       "github": "https://github.com/agomcam813/kanbanAntonioBackend"
+    },
+    {
+      "name": "Portfolio Personal",
+      "isActive": true,
+      "startDate": "2025-09-01",
+      "description": "Sitio web personal desarrollado con Astro, TailwindCSS y TypeScript para mostrar mis proyectos y experiencia como Backend Developer.",
+      "highlights": [
+        "Diseño responsive con TailwindCSS",
+        "Despliegue en Vercel con dominio personalizado",
+        "Integración de JSON Resume para gestión de datos"
+      ],
+      "technologies": [
+        "Astro",
+        "TailwindCSS",
+        "TypeScript",
+        "Vercel"
+      ],
+      "url": "https://portfolio.agomcam.com",
+      "github": "https://github.com/agomcam813/my-portfolio"
     }
+
   ],
   "interests": [
     {
