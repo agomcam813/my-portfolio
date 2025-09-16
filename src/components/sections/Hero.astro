@@ -105,9 +105,8 @@ export const getSocialIcon = (network) => {
                         Descargar CV
                     </a>
                 </div>
+
             </div>
-
-
 
             {/* Versión móvil de redes sociales y botón de CV */}
             <div class="lg:hidden w-full mt-8">
@@ -151,11 +150,103 @@ export const getSocialIcon = (network) => {
                     </a>
                 </div>
             </div>
+
         </div>
+
     </div>
+    
+    {/* Botón de Más información - Debajo del contenido */}
+    <div class="w-full flex justify-center py-8 md:py-12">
+        <a
+            href="#about"
+            class="inline-flex items-center px-8 py-3 bg-accent hover:bg-accent/90 text-gray-900 black:text-white font-medium rounded-full shadow-lg hover:shadow-xl hover:shadow-accent/30 animate-bounce-slow"
+            id="more-info-button"
+        >
+            <span>Más información</span>
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </a>
+    </div>
+    
+    <script>
+        // Comportamiento del botón de más información
+        document.addEventListener('astro:page-load', () => {
+            const button = document.getElementById('more-info-button');
+            const heroSection = document.getElementById('home');
+            
+            // Función para manejar el scroll
+            const handleScroll = () => {
+                // En móviles, siempre mostrar el botón
+                if (window.innerWidth < 768) {
+                    button.style.display = 'flex';
+                    button.style.opacity = '1';
+                    button.style.pointerEvents = 'auto';
+                    return;
+                }
+                
+                // Para desktop, manejar visibilidad basada en la sección visible
+                const heroRect = heroSection.getBoundingClientRect();
+                const isHeroInView = heroRect.bottom > 0 && heroRect.top < window.innerHeight;
+                
+                if (isHeroInView) {
+                    button.style.opacity = '1';
+                    button.style.pointerEvents = 'auto';
+                } else {
+                    button.style.opacity = '0';
+                    button.style.pointerEvents = 'none';
+                }
+            };
+            
+            // Manejar clic suave para el scroll
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(button.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+            
+            // Event listeners
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            window.addEventListener('resize', handleScroll, { passive: true });
+            
+            // Estado inicial
+            handleScroll();
+            
+            // Limpieza
+            return () => {
+                window.removeEventListener('scroll', handleScroll);
+                window.removeEventListener('resize', handleScroll);
+            };
+        });
+    </script>
 </Section>
 
 <style>
+    /* Animación de rebote personalizada */
+    @keyframes bounce-slow {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+    
+    .animate-bounce-slow {
+        animation: bounce-slow 2s infinite;
+        transition: all 0.3s ease;
+    }
+    
+    .animate-bounce-slow:hover {
+        animation: none;
+        transform: translateY(-2px);
+    }
+    
     [data-profile-image] {
         transform-origin: center;
     }
