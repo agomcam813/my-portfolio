@@ -12,7 +12,7 @@ const allProjects = [...projects, ...publications.map(pub => ({
 }))].sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
 ---
 
-<Section title="Projects">
+<Section title="Proyectos">
   {allProjects.length > 0 ? (
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {allProjects.map((project, index) => (
