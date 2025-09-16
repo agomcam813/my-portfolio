@@ -84,6 +84,8 @@
       "keywords": [
         "FastAPI (Python)",
         "Spring Framework (Java)",
+        "Tortoise ORM",
+        "Hibernate",
         "Angular",
         "Bootstrap",
         "Android Studio"
@@ -94,8 +96,8 @@
       "keywords": [
         "MySQL",
         "PostgreSQL",
-        "Tortoise ORM (Python)",
-        "Hibernate (Java)"
+        "SQLite",
+        "MongoDB"
       ]
     },
     {
