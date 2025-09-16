@@ -1,6 +1,6 @@
 ---
 const { project } = Astro.props;
-const { name, description, highlights = [], url, startDate, endDate, github } = project;
+const { name, description, highlights = [], url, startDate, endDate, github, technologies = [] } = project;
 
 const formatDate = (dateString) => {
   if (!dateString) return 'Present';
@@ -48,7 +48,7 @@ const endDateFormatted = formatDate(endDate);
         <ul class="space-y-2">
           {highlights.map((highlight, index) => (
             <li key={index} class="flex items-start group-hover:translate-x-1 transition-transform duration-200">
-              <span class="text-accent mr-2 mt-1">•</span>
+              <span class="text-accent mr-2">•</span>
               <span class="text-gray-300">{highlight}</span>
             </li>
           ))}
@@ -56,14 +56,31 @@ const endDateFormatted = formatDate(endDate);
       </div>
     )}
     
-    {/* Footer with links */}
-    <div class="mt-6 pt-4 border-t border-gray-700/50 flex justify-between items-center">
+    {/* Technologies */}
+    {technologies && technologies.length > 0 && (
+      <div class="mt-4">
+        <h4 class="text-sm font-medium text-gray-400 mb-2">Tecnologías utilizadas:</h4>
+        <div class="flex flex-wrap gap-2">
+          {technologies.map((tech, index) => (
+            <span 
+              key={index} 
+              class="px-2 py-1 text-xs font-medium rounded-full bg-gray-700/50 text-gray-300 border border-gray-600/50 hover:bg-accent/10 hover:border-accent/50 hover:text-accent transition-colors"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+    )}
+    
+    {/* Links */}
+    <div class="mt-4 pt-4 border-t border-gray-700/50 flex flex-wrap gap-3">
       {github && (
         <a 
           href={github}
           target="_blank"
           rel="noopener noreferrer"
-          class="text-sm text-gray-400 hover:text-accent transition-colors flex items-center group"
+          class="text-sm text-gray-400 hover:text-accent transition-colors flex items-center"
           title="Ver en GitHub"
         >
           <svg class="w-4 h-4 mr-1.5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

@@ -140,7 +140,15 @@
         "Uso de principios SOLID",
         "Gestión de tareas y columnas en tableros Kanban",
         "Persistencia de datos con Tortoise ORM y PostgreSQL",
-        "Autenticación y permisos con supabase"
+        "Autenticación y permisos con Supabase"
+      ],
+      "technologies": [
+        "Python",
+        "FastAPI",
+        "Tortoise ORM",
+        "PostgreSQL",
+        "Supabase",
+        "Docker"
       ],
       "url": "https://github.com/agomcam813/kanbanAntonioBackend",
       "github": "https://github.com/agomcam813/kanbanAntonioBackend"
