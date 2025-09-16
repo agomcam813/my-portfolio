@@ -1,6 +1,5 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import {getCollection} from 'astro:content';
 
 // Import sections
 import Experience from '@/components/sections/Experience.astro';
@@ -9,22 +8,11 @@ import Skills from '@/components/sections/Skills.astro';
 import Projects from '@/components/sections/Projects.astro';
 import Hero from '@/components/sections/Hero.astro';
 import About from '@/components/sections/About.astro';
-import KeyboardManager from '@/components/KeyboardManager.astro';
 
-// Load CV data
-import cvData from '../../cv.json';
-
-// Set loading state to false by default
 const isLoading = false;
 let error = null;
 
-// You can add error handling here if needed
-// try {
-//   // Any async data fetching can go here
-// } catch (err) {
-//   error = err;
-//   console.error('Error loading page data:', err);
-// }
+
 ---
 
 <Layout title="Home" {isLoading} {error}>
@@ -64,7 +52,6 @@ let error = null;
 
         </div>
     </main>
-    <KeyboardManager/>
 
     <script>
         // Handle page transitions

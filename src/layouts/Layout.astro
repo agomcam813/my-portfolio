@@ -1,10 +1,10 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import '../styles/global.css';
-import BackToTop from '../components/BackToTop.astro';
-import ErrorBoundary from '../components/ErrorBoundary.astro';
-import Loading from '../components/Loading.astro';
-import Navbar from '../components/Navbar.astro';
+import BackToTop from '@/components/BackToTop.astro';
+import ErrorBoundary from '@/components/ErrorBoundary.astro';
+import Loading from '@/components/Loading.astro';
+import Navbar from '@/components/Navbar.astro';
 
 interface Props {
   title: string;
@@ -21,7 +21,7 @@ const { title, isLoading = false, error = null } = Astro.props;
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="icon" type="image/svg+xml" href="/favicon.webp"/>
   <meta name="generator" content={Astro.generator}/>
-  <title>{title}</title>
+  <title>"Portfolio agomcam813"</title>
   <ClientRouter/>
   
   <script>
