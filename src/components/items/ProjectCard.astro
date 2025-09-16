@@ -12,19 +12,19 @@ const startDateFormatted = formatDate(startDate);
 const endDateFormatted = formatDate(endDate);
 ---
 
-<article class="group relative bg-gray-800/30 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 hover:border-accent/30 transition-all duration-300 hover:shadow-lg hover:shadow-accent/5">
+<article class="group relative bg-white/80 dark:bg-gray-800/30 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700/50 hover:border-accent/50 dark:hover:border-accent/30 transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 dark:hover:shadow-accent/5 flex flex-col h-full">
   {/* Gradient overlay on hover */}
-    <div class="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+  <div class="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-  <div class="relative px-6 py-5 h-full flex flex-col">
+  <div class="relative px-6 py-5 flex flex-col h-full">
     {/* Header with GitHub link and date */}
-    <div class="flex justify-between items-center mb-4 pb-4 border-b border-gray-700/50">
+    <div class="flex justify-between items-center mb-4 pb-4 border-b border-gray-200 dark:border-gray-700/50">
       {github ? (
         <a 
           href={github}
           target="_blank"
           rel="noopener noreferrer"
-          class="text-sm text-gray-400 hover:text-accent transition-colors flex items-center"
+          class="text-sm text-gray-600 dark:text-gray-400 hover:text-accent dark:hover:text-accent transition-colors flex items-center"
           title="Ver en GitHub"
         >
           <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -32,75 +32,77 @@ const endDateFormatted = formatDate(endDate);
           </svg>
           Ver en GitHub
         </a>
-      ) : <div></div>}
-      <span class="text-sm text-gray-400 group-hover:text-gray-300 transition-colors whitespace-nowrap">
+      ) : <div class="h-5"></div>}
+      <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors whitespace-nowrap">
         {startDateFormatted} - {endDateFormatted}
       </span>
     </div>
     
-    {/* Project title and content */}
-    <h3 class="text-xl font-bold text-white group-hover:text-accent transition-colors mb-4">
+    {/* Project title */}
+    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4 min-h-[32px]">
       {url ? (
         <a 
-          href={url} 
+          href="{url}" 
           target="_blank" 
           rel="noopener noreferrer"
-          class="hover:underline underline-offset-4 decoration-2 decoration-accent/50"
+          class="hover:underline underline-offset-4 decoration-2 decoration-gray-300 dark:decoration-gray-600 hover:decoration-gray-400 dark:hover:decoration-gray-500"
         >
           {name}
         </a>
       ) : name}
     </h3>
     
-    {/* Description */}
-    {description && (
-      <p class="text-gray-300 mb-4 flex-grow">{description}</p>
-    )}
-    
-    {/* Highlights */}
-    {highlights && highlights.length > 0 && (
-      <div class="mt-4 space-y-3">
-        <h4 class="text-sm font-medium text-gray-400">Características principales:</h4>
-        <ul class="space-y-2">
-          {highlights.map((highlight, index) => (
-            <li key={index} class="flex items-start group-hover:translate-x-1 transition-transform duration-200">
-              <span class="text-accent mr-2">•</span>
-              <span class="text-gray-300">{highlight}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    )}
-    
-    {/* Technologies */}
-    {technologies && technologies.length > 0 && (
-      <div class="mt-4">
-        <h4 class="text-sm font-medium text-gray-400 mb-2">Tecnologías utilizadas:</h4>
-        <div class="flex flex-wrap gap-2">
-          {technologies.map((tech, index) => (
-            <span 
-              key={index} 
-              class="px-2 py-1 text-xs font-medium rounded-full bg-gray-700/50 text-gray-300 border border-gray-600/50 hover:bg-accent/10 hover:border-accent/50 hover:text-accent transition-colors"
-            >
-              {tech}
-            </span>
-          ))}
+    <div class="flex-grow">
+      {/* Description */}
+      {description && (
+        <p class="text-gray-700 dark:text-gray-300 mb-4">{description}</p>
+      )}
+      
+      {/* Highlights */}
+      {highlights && highlights.length > 0 && (
+        <div class="space-y-3">
+          <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400">Características principales:</h4>
+          <ul class="space-y-2">
+            {highlights.map((highlight, index) => (
+              <li key={index} class="flex items-start group-hover:translate-x-1 transition-transform duration-200">
+                <span class="text-accent mr-2">•</span>
+                <span class="text-gray-700 dark:text-gray-300">{highlight}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
-    )}
+      )}
+      
+      {/* Technologies */}
+      {technologies && technologies.length > 0 && (
+        <div class="mt-4">
+          <h4 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Tecnologías utilizadas:</h4>
+          <div class="flex flex-wrap gap-2">
+            {technologies.map((tech, index) => (
+              <span 
+                key={index} 
+                class="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600/50 hover:bg-accent/10 hover:border-accent/50 hover:text-accent transition-colors"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
     
     {/* Links */}
-    <div class="mt-4 pt-4 flex flex-wrap gap-3">
+    <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/50 flex flex-wrap gap-3">
       {url && url !== github && (
         <a 
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          class="text-sm text-gray-400 hover:text-accent transition-colors flex items-center"
+          class="text-sm text-accent hover:opacity-80 transition-opacity flex items-center"
           title="Ver proyecto"
         >
-          Ver proyecto
-          <svg class="w-3.5 h-3.5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <span class="group-hover:underline">Ver proyecto</span>
+          <svg class="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
           </svg>
         </a>

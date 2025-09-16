@@ -31,7 +31,7 @@ const formatDate = (dateString: string) => {
 <article class="mb-10 group transition-all duration-300 hover:translate-x-1">
     <div class="relative pl-10">
         {/* Education icon */}
-        <div class="absolute left-0 top-1 w-7 h-7 rounded-full bg-accent/10 border-2 border-accent flex items-center justify-center group-hover:bg-accent/20 transition-colors duration-300">
+        <div class="absolute left-0 top-1 w-7 h-7 rounded-full bg-accent/10 dark:bg-accent/10 border-2 border-accent flex items-center justify-center group-hover:bg-accent/20 dark:group-hover:bg-accent/20 transition-colors duration-300">
             <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
             </svg>
@@ -41,11 +41,11 @@ const formatDate = (dateString: string) => {
             <div class="flex flex-col gap-2">
                 <div class="flex items-start justify-between w-full">
                     <div class="space-y-1">
-                        <h3 class="text-xl font-bold text-white group-hover:text-accent transition-colors">
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white group-hover:text-accent transition-colors">
                             {studyType} in {area}
                         </h3>
                     </div>
-                    <div class="text-sm text-gray-400 bg-gray-800/50 px-3 py-1 rounded-full border border-gray-700/50 whitespace-nowrap ml-4 mt-0.5">
+                    <div class="text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800/50 px-3 py-1 rounded-full border border-gray-200 dark:border-gray-700/50 whitespace-nowrap ml-4 mt-0.5">
                         {formatDate(startDate)} - {endDate ? formatDate(endDate) : 'Present'}
                     </div>
                 </div>
@@ -69,8 +69,8 @@ const formatDate = (dateString: string) => {
                         )}
                         
                         {gpa && (
-                            <span class="text-sm text-gray-400 flex items-center">
-                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-900/30 text-green-400 border border-green-800/50">
+                            <span class="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800/50">
                                     GPA: {gpa}
                                 </span>
                             </span>
@@ -83,12 +83,12 @@ const formatDate = (dateString: string) => {
         
         {courses && courses.length > 0 && (
             <div class="mt-4 pl-1">
-                <h4 class="text-sm font-medium text-gray-300 mb-2">Relevant Coursework</h4>
+                <h4 class="text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">Relevant Coursework</h4>
                 <div class="flex flex-wrap gap-2">
                     {courses.map((course, i) => (
                         <span 
                             key={i} 
-                            class="text-xs px-3 py-1 bg-gray-800/50 rounded-full text-gray-300 border border-gray-700/50 hover:bg-accent/10 hover:border-accent/30 hover:text-accent transition-colors duration-200"
+                            class="text-xs px-3 py-1 bg-gray-100 dark:bg-gray-800/50 rounded-full text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700/50 hover:bg-accent/10 hover:border-accent/30 hover:text-accent transition-colors duration-200"
                             data-animate-on-load
                             style={`--delay: ${i * 50 + 100}ms`}
                         >

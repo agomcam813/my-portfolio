@@ -12,15 +12,89 @@
     rgb(var(--accent-light)) 30%,
     white 60%
   );
+  
+  --bg-primary: 249, 250, 251;
+  --bg-secondary: 255, 255, 255;
+  --text-primary: 17, 24, 39;
+  --text-secondary: 75, 85, 99;
+  --border-color: 229, 231, 235;
+}
+
+.dark {
+  --bg-primary: 17, 24, 39;
+  --bg-secondary: 31, 41, 55;
+  --text-primary: 243, 244, 246;
+  --text-secondary: 156, 163, 175;
+  --border-color: 55, 65, 81;
 }
 
 @layer base {
   html {
-    @apply bg-[#13151a] text-white;
+    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100;
     font-family: system-ui, sans-serif;
   }
   
   body {
-    @apply min-h-screen w-full flex justify-center overflow-x-hidden;
+    @apply min-h-screen w-full flex justify-center overflow-x-hidden bg-[rgb(var(--bg-primary))] text-[rgb(var(--text-primary))] transition-colors duration-200;
+  }
+  
+  /* Estilos para los enlaces */
+  a {
+    @apply text-gray-900 hover:text-gray-700 dark:text-white dark:hover:text-gray-50 transition-colors;
+  }
+  
+  /* Estilos para los encabezados */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-gray-900 dark:text-white;
+  }
+  
+  /* Estilos para los párrafos */
+  p {
+    @apply text-gray-700 dark:text-gray-300;
+  }
+  
+  /* Estilos para los botones */
+  button, .btn {
+    @apply transition-colors duration-200;
+  }
+  
+  /* Estilos para las tarjetas */
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700;
+  }
+  
+  /* Estilos para los inputs */
+  input, textarea, select {
+    @apply bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors;
+  }
+  
+  /* Estilos para las tablas */
+  table {
+    @apply min-w-full divide-y divide-gray-200 dark:divide-gray-700;
+  }
+  
+  th {
+    @apply px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider;
+  }
+  
+  td {
+    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200;
+  }
+  
+  /* Estilos para los bloques de código */
+  pre, code {
+    @apply bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded p-2 font-mono text-sm;
+  }
+  
+  /* Transiciones suaves para el tema */
+  * {
+    @apply transition-colors duration-200;
+  }
+  
+  /* Evitar parpadeo en la carga inicial */
+  .js-loading *,
+  .js-loading *:before,
+  .js-loading *:after {
+    transition: none !important;
   }
 }

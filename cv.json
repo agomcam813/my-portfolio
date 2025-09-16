@@ -4,7 +4,7 @@
     "label": "Backend Developer",
     "email": "",
     "url": "/me.webp",
-    "summary": "Desarrollador Backend en formación con enfoque en Python y FastAPI. Titulado en Desarrollo de Aplicaciones Multiplataforma y con experiencia previa en soporte TI. He desarrollado proyectos personales y académicos aplicando principios como Clean Architecture y SOLID. También cuento con experiencia en Java adquirida durante dos años de formación y me interesa seguir creciendo profesionalmente en equipos con buenas prácticas de desarrollo.",
+    "summary": "Desarrollador Backend con enfoque en Python y FastAPI. Titulado en Desarrollo de Aplicaciones Multiplataforma y con experiencia previa en soporte TI. He desarrollado proyectos personales y académicos aplicando principios como Clean Architecture y SOLID. También cuento con experiencia en Java adquirida durante dos años de formación y me interesa seguir creciendo profesionalmente en equipos con buenas prácticas de desarrollo.",
     "location": {
       "address": "",
       "postalCode": "",
@@ -161,10 +161,11 @@
     {
       "name": "Portfolio Personal",
       "isActive": true,
-      "startDate": "2025-09-01",
+      "startDate": "2025-09-14",
       "description": "Sitio web personal desarrollado con Astro, TailwindCSS y TypeScript para mostrar mis proyectos y experiencia como Backend Developer.",
       "highlights": [
         "Diseño responsive con TailwindCSS",
+        "Implementación de modo claro/oscuro",
         "Despliegue en Vercel con dominio personalizado",
         "Integración de JSON Resume para gestión de datos"
       ],

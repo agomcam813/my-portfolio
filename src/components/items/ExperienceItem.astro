@@ -24,7 +24,7 @@ const endDateFormatted = formatDate(endDate);
   <header class="mb-3">
     <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
       <div class="space-y-1">
-        <h3 class="text-xl font-bold text-white group-hover:text-accent transition-colors">
+        <h3 class="text-xl font-bold text-gray-800 dark:text-white group-hover:text-accent transition-colors">
           {name}
         </h3>
         <div class="flex flex-wrap items-center gap-2">
@@ -48,14 +48,14 @@ const endDateFormatted = formatDate(endDate);
         </div>
       </div>
       
-      <div class="text-sm text-gray-400 bg-gray-800/50 px-3 py-1 rounded-full border border-gray-700/50">
+      <div class="text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800/50 px-3 py-1 rounded-full border border-gray-200 dark:border-gray-700/50">
         {startDateFormatted} - {endDateFormatted}
       </div>
     </div>
   </header>
   
   {summary && (
-    <p class="text-gray-400 mb-3">{summary}</p>
+    <p class="text-gray-600 dark:text-gray-400 mb-3">{summary}</p>
   )}
   
   {highlights && highlights.length > 0 && (
@@ -68,7 +68,7 @@ const endDateFormatted = formatDate(endDate);
           style={`--delay: ${i * 50 + 100}ms`}
         >
           <span class="text-accent mr-3 mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent opacity-0 group-hover/item:opacity-100 transition-opacity"></span>
-          <span class="text-gray-300 group-hover/item:text-white transition-colors">
+          <span class="text-gray-700 dark:text-gray-300 group-hover/item:text-gray-900 dark:group-hover/item:text-white transition-colors">
             {highlight}
           </span>
         </li>

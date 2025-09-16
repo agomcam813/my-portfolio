@@ -26,8 +26,8 @@ export const getSocialIcon = (network) => {
 };
 ---
 
-<Section id="home">
-    <div class="flex flex-col lg:flex-row items-center justify-between gap-8" data-animate-on-load
+<Section id="home" class="py-16 md:py-24">
+    <div class="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12" data-animate-on-load
          style="--delay: 100ms">
         {/* Contenedor de la foto (arriba en móvil, derecha en desktop) */}
         <figure class="w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-accent shadow-2xl group mx-auto lg:order-2"
@@ -44,115 +44,115 @@ export const getSocialIcon = (network) => {
 
         {/* Contenedor del texto (centrado en móvil, izquierda en desktop) */}
         <div class="flex-1 w-full lg:w-auto text-center lg:text-left">
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 leading-tight" data-animate-on-load
-                style="--delay: 200ms">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-3 leading-tight" 
+                data-animate-on-load style="--delay: 200ms">
                 {name}
             </h1>
-            <h2 class="text-2xl md:text-3xl text-accent mb-6" data-animate-on-load style="--delay: 300ms">
+            <h2 class="text-2xl md:text-3xl text-accent mb-6 dark:text-accent-light" data-animate-on-load style="--delay: 300ms">
                 {label}
             </h2>
 
-            {/* Sección de redes sociales (solo visible en desktop) */}
+            {basics.summary && (
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0" data-animate-on-load style="--delay: 350ms">
+                    {basics.summary}
+                </p>
+            )}
+
+            {/* Sección de redes sociales y botón de descarga (solo visible en desktop) */}
             <div class="hidden lg:block">
-                {profiles && (profiles.length > 0 || url || email) && (
-                        <div class="flex flex-wrap gap-4 mt-6">
+                <div class="flex flex-wrap items-center gap-4 mt-6">
+                    {profiles && (profiles.length > 0 || url || email) && (
+                        <>
                             {profiles.map((profile) => {
                                 const Icon = getSocialIcon(profile.network);
                                 return (
-                                        <a
-                                                href={profile.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-gray-300 hover:bg-accent hover:text-white transition-colors"
-                                                aria-label={profile.network}
-                                                data-animate-on-load
-                                                style={`--delay: ${500 + (profiles.indexOf(profile) * 100)}ms`}
-                                        >
-                                            <Icon class="w-5 h-5"/>
-                                        </a>
+                                    <a
+                                        href={profile.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors"
+                                        data-animate-on-load
+                                        style={`--delay: ${300 + (profiles.indexOf(profile) * 100)}ms`}
+                                        aria-label={profile.network}
+                                    >
+                                        <Icon class="w-6 h-6"/>
+                                    </a>
                                 );
                             })}
                             {email && (
-                                    <a
-                                            href={`mailto:${email}`}
-                                            class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 text-gray-300 hover:bg-accent hover:text-white transition-colors"
-                                            aria-label="Email"
-                                            data-animate-on-load
-                                            style={`--delay: ${500 + (profiles.length * 100) + 100}ms`}
-                                    >
-                                        <Mail class="w-5 h-5"/>
-                                    </a>
-                            )}
-                            <div class="relative group" data-animate-on-load
-                                 style={`--delay: ${500 + (profiles.length * 100) + 200}ms`}>
                                 <a
-                                        href="./files/CV-Antonio-Gomez-Camarena.pdf"
-                                        download
-                                        class="flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-white hover:bg-accent/90 transition-colors text-sm font-medium"
-                                        aria-label="Descargar CV en formato PDF"
-                                        title="Descargar CV (PDF - Antonio Gómez Camarena)"
+                                    href={`mailto:${email}`}
+                                    class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors"
+                                    data-animate-on-load
+                                    style={`--delay: ${300 + (profiles.length * 100)}ms`}
+                                    aria-label="Email"
                                 >
-                                    <Download class="w-4 h-4"/>
-                                    <span class="hidden sm:inline">Descargar CV</span>
-                                    <span class="sm:hidden">CV</span>
+                                    <Mail class="w-6 h-6"/>
                                 </a>
-                                <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs bg-gray-900 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                    CV_Antonio_Gomez_Camarena.pdf
-                                    <div class="absolute top-full left-1/2 w-2 h-2 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-gray-900"></div>
-                                </div>
-                            </div>
-                        </div>
-                )}
+                            )}
+                        </>
+                    )}
+                    
+                    {/* Botón de descarga de CV */}
+                    <a
+                        href="/files/CV-Antonio-Gomez-Camarena.pdf"
+                        download
+                        class="w-full sm:w-auto flex items-center justify-center px-6 py-3 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-white font-medium rounded-lg transition-all duration-200 border-2 border-accent shadow-md hover:shadow-lg hover:shadow-accent/20"
+                        data-animate-on-load
+                        style="--delay: 400ms"
+                    >
+                        <Download class="w-5 h-5 mr-2"/>
+                        Descargar CV
+                    </a>
+                </div>
             </div>
 
-            {/* Contenedor de redes sociales (solo visible en móvil) */}
-            <div class="lg:hidden w-full">
-                {profiles && profiles.length > 0 && (
-                        <div class="flex flex-wrap justify-center gap-4 mt-8">
+
+
+            {/* Versión móvil de redes sociales y botón de CV */}
+            <div class="lg:hidden w-full mt-8">
+                <div class="flex flex-col items-center gap-6">
+                    {profiles && profiles.length > 0 && (
+                        <div class="flex flex-wrap justify-center gap-4">
                             {profiles.map((profile) => {
                                 const Icon = getSocialIcon(profile.network);
                                 return (
-                                        <a
-                                                href={profile.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 text-gray-300 hover:bg-accent hover:text-white transition-colors"
-                                                aria-label={profile.network}
-                                                data-animate-on-load
-                                                style={`--delay: ${500 + (profiles.indexOf(profile) * 100)}ms`}
-                                        >
-                                            <Icon class="w-6 h-6"/>
-                                        </a>
+                                    <a
+                                        href={profile.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors"
+                                        aria-label={profile.network}
+                                    >
+                                        <Icon class="w-6 h-6"/>
+                                    </a>
                                 );
                             })}
                             {email && (
-                                    <a
-                                            href={`mailto:${email}`}
-                                            class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 text-gray-300 hover:bg-accent hover:text-white transition-colors"
-                                            aria-label="Email"
-                                            data-animate-on-load
-                                            style={`--delay: ${500 + (profiles.length * 100) + 100}ms`}
-                                    >
-                                        <Mail class="w-6 h-6"/>
-                                    </a>
-                            )}
-                            <div class="relative group w-full flex justify-center mt-4" data-animate-on-load
-                                 style={`--delay: ${500 + (profiles.length * 100) + 200}ms`}>
                                 <a
-                                        href="./files/CV-Antonio-Gomez-Camarena.pdf"
-                                        download
-                                        class="flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-white hover:bg-accent/90 transition-colors text-base font-medium w-auto relative z-10"
-                                        aria-label="Descargar CV en formato PDF"
-                                        title="Descargar CV (PDF - Antonio Gómez Camarena)"
+                                    href={`mailto:${email}`}
+                                    class="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors"
+                                    aria-label="Email"
                                 >
-                                    <Download class="w-5 h-5"/>
-                                    <span>Descargar CV</span>
+                                    <Mail class="w-6 h-6"/>
                                 </a>
-                            </div>
+                            )}
                         </div>
-                )}
+                    )}
+                    
+                    {/* Botón de descarga para móvil */}
+                    <a
+                        href="/files/CV-Antonio-Gomez-Camarena.pdf"
+                        download
+                        class="w-full max-w-xs px-6 py-3 bg-[rgb(var(--accent))] hover:bg-[rgba(var(--accent),0.9)] text-white font-medium rounded-lg transition-all duration-200 shadow-md hover:shadow-lg hover:shadow-[rgba(var(--accent),0.2)] flex items-center justify-center"
+                    >
+                        <Download class="w-5 h-5 mr-2"/>
+                        Descargar CV
+                    </a>
+                </div>
             </div>
         </div>
+    </div>
 </Section>
 
 <style>

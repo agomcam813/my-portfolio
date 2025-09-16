@@ -21,27 +21,51 @@ const { title, isLoading = false, error = null } = Astro.props;
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="icon" type="image/svg+xml" href="/favicon.webp"/>
   <meta name="generator" content={Astro.generator}/>
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1f2937" media="(prefers-color-scheme: dark)">
   <title>Portfolio agomcam813</title>
   <ClientRouter/>
   
   <script>
-    // Add a class to html element when page is loaded
-    document.documentElement.classList.add('js-loaded');
+    // Aplicar tema guardado al cargar
+    const applyTheme = () => {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      
+      // Agregar clase de carga
+      document.documentElement.classList.add('js-loaded');
+    };
     
-    // Handle loading state
+    // Manejar estado de carga
     if (document.readyState === 'loading') {
       document.documentElement.classList.add('js-loading');
       window.addEventListener('load', () => {
         document.documentElement.classList.remove('js-loading');
-        document.documentElement.classList.add('js-loaded');
+        applyTheme();
       });
+    } else {
+      applyTheme();
     }
+    
+    // Escuchar cambios en la preferencia del sistema
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      // Solo aplicar si no hay preferencia guardada
+      if (!localStorage.getItem('theme')) {
+        document.documentElement.classList.toggle('dark', e.matches);
+      }
+    });
   </script>
 </head>
-<body class="antialiased text-gray-300 bg-gray-900 w-full">
-  <div class="w-full overflow-x-hidden">
+<body class="antialiased text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-900 w-full transition-colors duration-200">
+  <div class="w-full overflow-x-hidden min-h-screen">
     <Navbar />
-    <main class="min-h-screen pt-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    <main class="pt-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
     {isLoading ? (
       <Loading />
     ) : error ? (

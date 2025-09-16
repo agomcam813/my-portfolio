@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from './ThemeToggle.astro';
+
 const navItems = [
   { name: 'Inicio', href: '#home' },
   { name: 'Sobre Mí', href: '#about'},
@@ -9,55 +11,69 @@ const navItems = [
 ];
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-sm border-b border-gray-800">
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-16">
       <div class="flex items-center">
-        <a href="#home" class="text-white text-xl font-bold">
+        <a href="#home" class="text-gray-900 dark:text-white text-xl font-bold">
           <span class="text-accent">Portfolio</span>
         </a>
       </div>
       
-      {/* Desktop Navigation */}
-      <nav class="hidden md:flex items-center space-x-1">
-        {navItems.map((item) => (
-          <a 
-            href={item.href}
-            class="px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800 rounded-md transition-colors duration-200 text-sm font-medium flex items-center gap-2"
-            data-nav-link
+      <div class="flex items-center space-x-2">
+        {/* Desktop Navigation */}
+        <nav class="hidden md:flex items-center space-x-1">
+          {navItems.map((item) => (
+            <a 
+              href={item.href}
+              class="px-4 py-2 text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-md transition-colors duration-200 text-sm font-medium flex items-center gap-2 relative group"
+              data-nav-link
+            >
+              <span class="relative z-10">
+                <span class="relative">
+                  {item.name}
+                  <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-accent dark:bg-accent/80 transition-all duration-300 group-hover:w-full"></span>
+                </span>
+              </span>
+            </a>
+          ))}
+        </nav>
+        
+        {/* Theme Toggle */}
+        <div class="ml-2">
+          <ThemeToggle />
+        </div>
+        
+        {/* Mobile menu button */}
+        <div class="md:hidden flex items-center">
+          <button 
+            id="mobile-menu-button"
+            class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white focus:outline-none"
+            aria-label="Toggle menu"
           >
-
-            <span>{item.name}</span>
-          </a>
-        ))}
-      </nav>
-      
-      {/* Mobile menu button */}
-      <div class="md:hidden flex items-center">
-        <button 
-          id="mobile-menu-button"
-          class="text-gray-300 hover:text-white focus:outline-none"
-          aria-label="Toggle menu"
-        >
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   </div>
   
   {/* Mobile menu */}
-  <div id="mobile-menu" class="md:hidden hidden bg-gray-900/95 border-t border-gray-800">
+  <div id="mobile-menu" class="md:hidden hidden bg-white/95 dark:bg-gray-900/95 border-t border-gray-200 dark:border-gray-800">
     <div class="px-2 pt-2 pb-3 space-y-1">
       {navItems.map((item) => (
         <a 
           href={item.href}
-          class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 rounded-md transition-colors duration-200 text-base font-medium flex items-center gap-3"
+          class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-md transition-colors relative group"
           data-nav-link
         >
-
-          <span>{item.name}</span>
+          <span class="relative">
+            {item.name}
+            <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-accent dark:bg-accent/80 transition-all duration-300 group-hover:w-full"></span>
+          </span>
+          {item.name}
         </a>
       ))}
     </div>
@@ -98,11 +114,23 @@ const navItems = [
               const isActive = link.getAttribute('href') === `#${id}`;
               link.classList.toggle('text-accent', isActive);
               link.classList.toggle('font-semibold', isActive);
+              link.classList.toggle('dark:text-white', isActive);
               
-              // Update the icon color for the active link
-              const icon = link.querySelector('span:first-child');
-              if (icon) {
-                icon.classList.toggle('text-white', isActive);
+              // Update the active state for the link
+              const textSpan = link.querySelector('span.relative');
+              if (textSpan) {
+                const underline = textSpan.querySelector('span.absolute');
+                if (underline) {
+                  if (isActive) {
+                    underline.classList.add('w-full');
+                    underline.classList.add('bg-accent');
+                    underline.classList.add('dark:bg-accent/80');
+                  } else {
+                    underline.classList.remove('w-full');
+                    underline.classList.remove('bg-accent');
+                    underline.classList.remove('dark:bg-accent/80');
+                  }
+                }
               }
             });
           }
