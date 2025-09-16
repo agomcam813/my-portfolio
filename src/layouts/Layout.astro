@@ -38,9 +38,10 @@ const { title, isLoading = false, error = null } = Astro.props;
     }
   </script>
 </head>
-<body class="antialiased text-gray-300 bg-gray-900">
-  <Navbar />
-  <div class="min-h-screen pt-16">
+<body class="antialiased text-gray-300 bg-gray-900 w-full">
+  <div class="w-full overflow-x-hidden">
+    <Navbar />
+    <main class="min-h-screen pt-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
     {isLoading ? (
       <Loading />
     ) : error ? (

@@ -21,6 +21,6 @@
   }
   
   body {
-    @apply min-h-screen grid place-content-center;
+    @apply min-h-screen w-full overflow-x-hidden;
   }
 }
