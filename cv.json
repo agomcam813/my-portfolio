@@ -135,7 +135,7 @@
       "name": "KanbanAntonioBackend",
       "isActive": true,
       "startDate": "2025-08-20",
-      "endDate": "2025-10-20",
+      "endDate": "",
       "description": "API REST para gestión de tableros Kanban, desarrollada con Python y FastAPI aplicando principios de arquitectura limpia.",
       "highlights": [
         "Implementación de arquitectura limpia (Clean Architecture)",
