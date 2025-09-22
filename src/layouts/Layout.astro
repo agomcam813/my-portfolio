@@ -1,10 +1,10 @@
 ---
 import { ClientRouter } from "astro:transitions";
-import '../styles/global.css';
-import BackToTop from '@/components/BackToTop.astro';
-import ErrorBoundary from '@/components/ErrorBoundary.astro';
-import Loading from '@/components/Loading.astro';
-import Navbar from '@/components/Navbar.astro';
+import "../styles/global.css";
+import BackToTop from "@/components/BackToTop.astro";
+import ErrorBoundary from "@/components/ErrorBoundary.astro";
+import Loading from "@/components/Loading.astro";
+import Navbar from "@/components/Navbar.astro";
 
 interface Props {
   title: string;
@@ -14,95 +14,157 @@ interface Props {
 
 const { title, isLoading = false, error = null } = Astro.props;
 ---
+
 <!doctype html>
 <html lang="en" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="icon" type="image/svg+xml" href="/favicon.webp"/>
-  <meta name="generator" content={Astro.generator}/>
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#1f2937" media="(prefers-color-scheme: dark)">
-  <title>Portfolio agomcam813</title>
-  <ClientRouter/>
-  
-  <script>
-    // Aplicar tema guardado al cargar
-    const applyTheme = () => {
-      const savedTheme = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      
-      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-        document.documentElement.classList.add('dark');
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.webp" />
+
+    <!-- Title (muy importante para SEO) -->
+    <title>Portfolio de Antonio Gómez Camarena | agomcam813</title>
+
+    <!-- Descripción (aparece en Google debajo del título) -->
+    <meta
+      name="description"
+      content="Portfolio de Antonio Gómez Camarena (agomcam, agomcam813). Backend Developer especializado en Python, FastAPI y buenas prácticas como Clean Architecture y SOLID."
+    />
+
+    <!-- Keywords (Google ya no las usa mucho, pero otros buscadores sí) -->
+    <meta
+      name="keywords"
+      content="Antonio Gómez Camarena, agomcam, agomcam813, portfolio, backend developer, Python, FastAPI, Clean Architecture, SOLID"
+    />
+
+    <!-- Autor -->
+    <meta name="author" content="Antonio Gómez Camarena" />
+
+    <!-- Open Graph (para que se vea bien al compartir en redes) -->
+    <meta
+      property="og:title"
+      content="Portfolio de Antonio Gómez Camarena | agomcam"
+    />
+    <meta
+      property="og:description"
+      content="Descubre el portfolio de Antonio Gómez Camarena (agomcam). Backend Developer."
+    />
+    <meta property="og:image" content="/me.webp" />
+    <meta property="og:url" content="https://agomcam.com" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Portfolio de Antonio Gómez Camarena" />
+    <meta
+      name="twitter:description"
+      content="Portfolio de Antonio Gómez Camarena (agomcam). Backend Developer."
+    />
+    <meta name="twitter:image" content="/me.webp" />
+
+    <!-- Theme Colors -->
+    <meta
+      name="theme-color"
+      content="#ffffff"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#1f2937"
+      media="(prefers-color-scheme: dark)"
+    />
+
+    <!-- Astro client router -->
+    <ClientRouter />
+    <script>
+      // Aplicar tema guardado al cargar
+      const applyTheme = () => {
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+
+        if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+
+        // Agregar clase de carga
+        document.documentElement.classList.add("js-loaded");
+      };
+
+      // Manejar estado de carga
+      if (document.readyState === "loading") {
+        document.documentElement.classList.add("js-loading");
+        window.addEventListener("load", () => {
+          document.documentElement.classList.remove("js-loading");
+          applyTheme();
+        });
       } else {
-        document.documentElement.classList.remove('dark');
-      }
-      
-      // Agregar clase de carga
-      document.documentElement.classList.add('js-loaded');
-    };
-    
-    // Manejar estado de carga
-    if (document.readyState === 'loading') {
-      document.documentElement.classList.add('js-loading');
-      window.addEventListener('load', () => {
-        document.documentElement.classList.remove('js-loading');
         applyTheme();
-      });
-    } else {
-      applyTheme();
-    }
-    
-    // Escuchar cambios en la preferencia del sistema
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      // Solo aplicar si no hay preferencia guardada
-      if (!localStorage.getItem('theme')) {
-        document.documentElement.classList.toggle('dark', e.matches);
       }
-    });
-  </script>
-</head>
-<body class="antialiased text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-900 w-full transition-colors duration-200">
-  <div class="w-full overflow-x-hidden min-h-screen">
-    <Navbar />
-    <main class="pt-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-    {isLoading ? (
-      <Loading />
-    ) : error ? (
-      <ErrorBoundary error={error} />
-    ) : (
-      <>
-        <main>
-          <slot/>
-        </main>
-        <BackToTop />
-      </>
-    )}
-  </div>
-  
-  <style>
-    /* Smooth page load transition */
-    .js-loading *,
-    .js-loading *:before,
-    .js-loading *:after {
-      animation-play-state: paused !important;
-      transition: none !important;
-    }
-    
-    /* Fade in content when loaded */
-    .js-loading body {
-      opacity: 0;
-      transition: opacity 0.3s ease-in-out;
-    }
-    
-    .js-loaded body {
-      opacity: 1;
-    }
-  </style>
-</body>
+
+      // Escuchar cambios en la preferencia del sistema
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          // Solo aplicar si no hay preferencia guardada
+          if (!localStorage.getItem("theme")) {
+            document.documentElement.classList.toggle("dark", e.matches);
+          }
+        });
+    </script></head
+  >
+
+  <body
+    class="antialiased text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-900 w-full transition-colors duration-200"
+  >
+    <div class="w-full overflow-x-hidden min-h-screen">
+      <Navbar />
+      <main class="pt-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        {
+          isLoading ? (
+            <Loading />
+          ) : error ? (
+            <ErrorBoundary error={error} />
+          ) : (
+            <>
+              <main>
+                <slot />
+              </main>
+              <BackToTop />
+            </>
+          )
+        }
+      </main>
+
+      <style>
+        /* Smooth page load transition */
+        .js-loading *,
+        .js-loading *:before,
+        .js-loading *:after {
+          animation-play-state: paused !important;
+          transition: none !important;
+        }
+
+        /* Fade in content when loaded */
+        .js-loading body {
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out;
+        }
+
+        .js-loaded body {
+          opacity: 1;
+        }
+      </style>
+    </div>
+  </body>
 </html>
 <style>
-    body > div {
-        @apply container;
-    }
+  body > div {
+    @apply container;
+  }
 </style>

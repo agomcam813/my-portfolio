@@ -1,5 +1,5 @@
 ---
-import {basics} from "@cv"
+import { basics } from "@cv";
 import Section from "@/components/Section.astro";
 
 // Importa tus iconos SVG como componentes Astro
@@ -8,9 +8,7 @@ import LinkedIn from "@/icons/LinkedIn.astro";
 import Mail from "@/icons/Mail.astro";
 import Download from "@/icons/Download.astro";
 
-
-const {name, label, location, profiles, email, url} = basics
-
+const { name, label, location, profiles, email, url } = basics;
 
 // Devuelve el componente correcto
 export const getSocialIcon = (network) => {
@@ -21,78 +19,101 @@ export const getSocialIcon = (network) => {
     };
 
     // Si el perfil es un correo, devolvemos el ícono de correo
-    if (network === 'Email') return Mail;
+    if (network === "Email") return Mail;
     return icons[network];
 };
 ---
 
 <Section id="home" class="py-16 md:py-24">
-    <div class="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12" data-animate-on-load
-         style="--delay: 100ms">
+    <div
+        class="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12"
+        data-animate-on-load
+        style="--delay: 100ms"
+    >
         {/* Contenedor de la foto (arriba en móvil, derecha en desktop) */}
-        <figure class="w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-accent shadow-2xl group mx-auto lg:order-2"
-                data-animate-on-load style="--delay: 100ms">
+        <figure
+            class="w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-accent shadow-2xl group mx-auto lg:order-2"
+            data-animate-on-load
+            style="--delay: 100ms"
+        >
             <img
-                    src={url}
-                    alt={name}
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    width="320"
-                    height="320"
-                    loading="lazy"
+                src={url}
+                alt={name}
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                width="320"
+                height="320"
+                loading="lazy"
             />
         </figure>
 
         {/* Contenedor del texto (centrado en móvil, izquierda en desktop) */}
         <div class="flex-1 w-full lg:w-auto text-center lg:text-left">
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-3 leading-tight" 
-                data-animate-on-load style="--delay: 200ms">
+            <h1
+                class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-3 leading-tight"
+                data-animate-on-load
+                style="--delay: 200ms"
+            >
                 {name}
             </h1>
-            <h2 class="text-2xl md:text-3xl text-accent mb-6 dark:text-accent-light" data-animate-on-load style="--delay: 300ms">
+            <h2
+                class="text-2xl md:text-3xl text-accent mb-6 dark:text-accent-light"
+                data-animate-on-load
+                style="--delay: 300ms"
+            >
                 {label}
             </h2>
 
-            {basics.summary && (
-                <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0" data-animate-on-load style="--delay: 350ms">
-                    {basics.summary}
-                </p>
-            )}
+            {
+                basics.summary && (
+                    <p
+                        class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0"
+                        data-animate-on-load
+                        style="--delay: 350ms"
+                    >
+                        {basics.summary}
+                    </p>
+                )
+            }
 
-            {/* Sección de redes sociales y botón de descarga (solo visible en desktop) */}
+            {
+                /* Sección de redes sociales y botón de descarga (solo visible en desktop) */
+            }
             <div class="hidden lg:block">
                 <div class="flex flex-wrap items-center gap-4 mt-6">
-                    {profiles && (profiles.length > 0 || url || email) && (
-                        <>
-                            {profiles.map((profile) => {
-                                const Icon = getSocialIcon(profile.network);
-                                return (
+                    {
+                        profiles && (profiles.length > 0 || url || email) && (
+                            <>
+                                {profiles.map((profile) => {
+                                    const Icon = getSocialIcon(profile.network);
+                                    return (
+                                        <a
+                                            href={profile.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors"
+                                            data-animate-on-load
+                                            style={`--delay: ${300 + profiles.indexOf(profile) * 100}ms`}
+                                            aria-label={profile.network}
+                                        >
+                                            <Icon class="w-6 h-6" />
+                                        </a>
+                                    );
+                                })}
+                                {email && (
                                     <a
-                                        href={profile.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                                        href={`mailto:${email}`}
                                         class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors"
                                         data-animate-on-load
-                                        style={`--delay: ${300 + (profiles.indexOf(profile) * 100)}ms`}
-                                        aria-label={profile.network}
+                                        style={`--delay: ${300 + profiles.length * 100}ms`}
+                                        aria-label="Email"
                                     >
-                                        <Icon class="w-6 h-6"/>
+                                        <Mail class="w-6 h-6" />
                                     </a>
-                                );
-                            })}
-                            {email && (
-                                <a
-                                    href={`mailto:${email}`}
-                                    class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors"
-                                    data-animate-on-load
-                                    style={`--delay: ${300 + (profiles.length * 100)}ms`}
-                                    aria-label="Email"
-                                >
-                                    <Mail class="w-6 h-6"/>
-                                </a>
-                            )}
-                        </>
-                    )}
-                    
+                                )}
+                            </>
+                        )
+                    }
+
                     {/* Botón de descarga de CV */}
                     <a
                         href="/files/CV-Antonio-Gomez-Camarena.pdf"
@@ -101,63 +122,60 @@ export const getSocialIcon = (network) => {
                         data-animate-on-load
                         style="--delay: 400ms"
                     >
-                        <Download class="w-5 h-5 mr-2"/>
+                        <Download class="w-5 h-5 mr-2" />
                         Descargar CV
                     </a>
                 </div>
-
             </div>
 
             {/* Versión móvil de redes sociales y botón de CV */}
             <div class="lg:hidden w-full mt-8">
                 <div class="flex flex-col items-center gap-6">
-                    {profiles && profiles.length > 0 && (
-                        <div class="flex flex-wrap justify-center gap-4">
-                            {profiles.map((profile) => {
-                                const Icon = getSocialIcon(profile.network);
-                                return (
+                    {
+                        profiles && profiles.length > 0 && (
+                            <div class="flex flex-wrap justify-center gap-4">
+                                {profiles.map((profile) => {
+                                    const Icon = getSocialIcon(profile.network);
+                                    return (
+                                        <a
+                                            href={profile.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors"
+                                            aria-label={profile.network}
+                                        >
+                                            <Icon class="w-6 h-6" />
+                                        </a>
+                                    );
+                                })}
+                                {email && (
                                     <a
-                                        href={profile.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                                        href={`mailto:${email}`}
                                         class="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors"
-                                        aria-label={profile.network}
+                                        aria-label="Email"
                                     >
-                                        <Icon class="w-6 h-6"/>
+                                        <Mail class="w-6 h-6" />
                                     </a>
-                                );
-                            })}
-                            {email && (
+                                )}
+                                {/* Botón de descarga para móvil */}
                                 <a
-                                    href={`mailto:${email}`}
-                                    class="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors"
-                                    aria-label="Email"
-                                >
-                                    <Mail class="w-6 h-6"/>
-                                </a>
-                            )}
-                            {/* Botón de descarga para móvil */}
-                            <a
                                     href="/files/CV-Antonio-Gomez-Camarena.pdf"
                                     download
                                     class="inline-flex items-center justify-center pl-4 pr-4 h-12 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors"
                                     data-animate-on-load
                                     style="--delay: 400ms"
-                            >
-                                <Download class="w-5 h-5 mr-2"/>
-                                Descargar CV
-                            </a>
-                        </div>
-                    )}
-
-
+                                >
+                                    <Download class="w-5 h-5 mr-2" />
+                                    Descargar CV
+                                </a>
+                            </div>
+                        )
+                    }
                 </div>
             </div>
-
         </div>
-
     </div>
-    
+
     {/* Botón de Más información - Debajo del contenido */}
     <div class="w-full flex justify-center py-8 md:py-12">
         <a
@@ -166,64 +184,77 @@ export const getSocialIcon = (network) => {
             id="more-info-button"
         >
             <span>Más información</span>
-            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            <svg
+                class="w-4 h-4 ml-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>
         </a>
     </div>
-    
+
     <script>
         // Comportamiento del botón de más información
-        document.addEventListener('astro:page-load', () => {
-            const button = document.getElementById('more-info-button');
-            const heroSection = document.getElementById('home');
-            
+        document.addEventListener("astro:page-load", () => {
+            const button = document.getElementById("more-info-button");
+            const heroSection = document.getElementById("home");
+
             // Función para manejar el scroll
             const handleScroll = () => {
                 // En móviles, siempre mostrar el botón
                 if (window.innerWidth < 768) {
-                    button.style.display = 'flex';
-                    button.style.opacity = '1';
-                    button.style.pointerEvents = 'auto';
+                    button.style.display = "flex";
+                    button.style.opacity = "1";
+                    button.style.pointerEvents = "auto";
                     return;
                 }
-                
+
                 // Para desktop, manejar visibilidad basada en la sección visible
                 const heroRect = heroSection.getBoundingClientRect();
-                const isHeroInView = heroRect.bottom > 0 && heroRect.top < window.innerHeight;
-                
+                const isHeroInView =
+                    heroRect.bottom > 0 && heroRect.top < window.innerHeight;
+
                 if (isHeroInView) {
-                    button.style.opacity = '1';
-                    button.style.pointerEvents = 'auto';
+                    button.style.opacity = "1";
+                    button.style.pointerEvents = "auto";
                 } else {
-                    button.style.opacity = '0';
-                    button.style.pointerEvents = 'none';
+                    button.style.opacity = "0";
+                    button.style.pointerEvents = "none";
                 }
             };
-            
+
             // Manejar clic suave para el scroll
-            button.addEventListener('click', (e) => {
+            button.addEventListener("click", (e) => {
                 e.preventDefault();
-                const target = document.querySelector(button.getAttribute('href'));
+                const target = document.querySelector(
+                    button.getAttribute("href"),
+                );
                 if (target) {
                     target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                        behavior: "smooth",
+                        block: "start",
                     });
                 }
             });
-            
+
             // Event listeners
-            window.addEventListener('scroll', handleScroll, { passive: true });
-            window.addEventListener('resize', handleScroll, { passive: true });
-            
+            window.addEventListener("scroll", handleScroll, { passive: true });
+            window.addEventListener("resize", handleScroll, { passive: true });
+
             // Estado inicial
             handleScroll();
-            
+
             // Limpieza
             return () => {
-                window.removeEventListener('scroll', handleScroll);
-                window.removeEventListener('resize', handleScroll);
+                window.removeEventListener("scroll", handleScroll);
+                window.removeEventListener("resize", handleScroll);
             };
         });
     </script>
@@ -232,24 +263,25 @@ export const getSocialIcon = (network) => {
 <style>
     /* Animación de rebote personalizada */
     @keyframes bounce-slow {
-        0%, 100% {
+        0%,
+        100% {
             transform: translateY(0);
         }
         50% {
             transform: translateY(-10px);
         }
     }
-    
+
     .animate-bounce-slow {
         animation: bounce-slow 2s infinite;
         transition: all 0.3s ease;
     }
-    
+
     .animate-bounce-slow:hover {
         animation: none;
         transform: translateY(-2px);
     }
-    
+
     [data-profile-image] {
         transform-origin: center;
     }
@@ -264,7 +296,7 @@ export const getSocialIcon = (network) => {
     }
 
     [data-nav-link]::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: 0;
         left: 0;
